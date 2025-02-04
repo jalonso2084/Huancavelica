@@ -1,0 +1,6 @@
+[submodule "processed_data/historical_disease_records"]
+	path = processed_data/historical_disease_records
+	url = https://github.com/your-username/historical-disease-repo.git
+[submodule "processed_data/weather"]
+	path = processed_data/weather
+	url = https://github.com/your-username/weather-repo.git

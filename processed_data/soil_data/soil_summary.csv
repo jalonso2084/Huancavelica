@@ -1,0 +1,16 @@
+"Soil Property Summary"
+
+"Date: 2024-02-03"
+
+"Source: SoilGrids"
+
+"Coordinate System: EPSG:4326"
+
+"Dimensions: 628 x 664"
+
+Property,Min,Max,Mean,StDev
+"Volumetric Water Content",0,513,389.69,43.06
+"Silt Content",0,462,325.23,42.91
+"Sand Content",0,542,425.57,50.54
+"Clay Content",0,448,240.92,39.80
+"Bulk Density",0,135,112.92,12.47

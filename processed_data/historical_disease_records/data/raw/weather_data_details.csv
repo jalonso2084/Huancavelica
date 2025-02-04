@@ -1,0 +1,6 @@
+Variable,Units,Time Period,Source,Details
+Temperature (Max),°C,2002-2006,SENAMHI - 43 Meteorological Stations,Daily maximum temperatures recorded across stations.
+Temperature (Min),°C,2002-2006,SENAMHI - 43 Meteorological Stations,Daily minimum temperatures recorded across stations.
+Precipitation,mm,2002-2006,SENAMHI - 43 Meteorological Stations,Total daily precipitation measured in millimeters.
+Relative Humidity,%,2002-2006,SENAMHI - 43 Meteorological Stations,Daily relative humidity calculated based on wet and dry bulb temperatures.
+Dew Point Temperature,°C,2002-2006,SENAMHI - 43 Meteorological Stations,Dew point temperature calculated from partial vapor pressure.
