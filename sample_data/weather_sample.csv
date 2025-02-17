@@ -1,0 +1,5 @@
+﻿temperature,humidity,soil_moisture,disease_risk
+18,85,30,High
+22,70,40,Medium
+16,90,25,High
+20,65,35,Low
