@@ -1,0 +1,4 @@
+Date,Source,Variable,Unit,Description of Changes
+2024-01-29,ERA5,Temperature,°C,Initial dataset added
+2024-02-05,NASA POWER,Precipitation,mm,Added missing precipitation data
+2024-02-10,SENAMHI,Humidity,%,Corrected humidity values

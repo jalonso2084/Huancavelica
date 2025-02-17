@@ -1,0 +1,37 @@
+Year,Outbreak Severity,Fungicide Applications,Region_Climate Variability,"Region_Moderate El Niño, Increased Humidity","Region_Weak-Moderate El Niño, Excessive Rainfall",Climatic_Climate Variability,"Climatic_Moderate El Niño, Increased Humidity","Climatic_Weak-Moderate El Niño, Excessive Rainfall",Outbreak Severity Numeric,Disease Risk Index,Fungicide Applications (Proxy for Severity),Severity Level,Spatial Patterns/Trends,Region_0.0,Region_1.0,Region_Cajamarca,Region_Huánuco,Region_La Libertad,Crop Loss (%)
+2002-2003,High (El Niño),0.5,1.0,0.0,0.0,0.0,0.0,1.0,3,1.5,9.0,Moderate-High,Higher severity in central Cajamarca during El Niño years,0.0,0.0,1.0,0.0,0.0,0.0
+2002-2003,High (El Niño),0.5,1.0,0.0,0.0,0.0,0.0,1.0,3,1.5,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2002-2003,High (El Niño),0.5,1.0,0.0,0.0,0.0,0.0,1.0,3,1.5,7.5,Moderate,"Moderate severity, more pronounced in northern La Libertad",0.0,0.0,0.0,0.0,1.0,0.0
+2002-2003,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,0.0,1.0,4,4.0,9.0,Moderate-High,Higher severity in central Cajamarca during El Niño years,0.0,0.0,1.0,0.0,0.0,0.0
+2002-2003,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,0.0,1.0,4,4.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2002-2003,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,0.0,1.0,4,4.0,7.5,Moderate,"Moderate severity, more pronounced in northern La Libertad",0.0,0.0,0.0,0.0,1.0,0.0
+2002-2003,Moderate (El Niño),0.125,0.0,0.0,1.0,0.0,0.0,1.0,2,0.25,9.0,Moderate-High,Higher severity in central Cajamarca during El Niño years,0.0,0.0,1.0,0.0,0.0,0.0
+2002-2003,Moderate (El Niño),0.125,0.0,0.0,1.0,0.0,0.0,1.0,2,0.25,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2002-2003,Moderate (El Niño),0.125,0.0,0.0,1.0,0.0,0.0,1.0,2,0.25,7.5,Moderate,"Moderate severity, more pronounced in northern La Libertad",0.0,0.0,0.0,0.0,1.0,0.0
+2004-2005,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2004-2005,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2004-2005,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2004-2005,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2004-2005,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2004-2005,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2004-2005,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2004-2005,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2004-2005,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2005-2006,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2005-2006,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2005-2006,Moderate,0.125,1.0,0.0,0.0,1.0,0.0,0.0,2,0.25,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2005-2006,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2005-2006,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2005-2006,High,1.0,0.0,1.0,0.0,1.0,0.0,0.0,3,3.0,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2005-2006,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,7.5,Moderate,"Moderate severity across regions, no El Niño impact",0.0,0.0,1.0,0.0,0.0,0.0
+2005-2006,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2005-2006,Moderate,0.0,0.0,0.0,1.0,1.0,0.0,0.0,2,0.0,7.0,Moderate,"Moderate severity, stable patterns",0.0,0.0,0.0,0.0,1.0,0.0
+2006-2007,High (El Niño),1.0,1.0,0.0,0.0,0.0,1.0,0.0,3,3.0,11.0,High,Increased severity in higher altitudes during El Niño,0.0,0.0,1.0,0.0,0.0,0.0
+2006-2007,High (El Niño),1.0,1.0,0.0,0.0,0.0,1.0,0.0,3,3.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2006-2007,High (El Niño),1.0,1.0,0.0,0.0,0.0,1.0,0.0,3,3.0,10.5,High,Increased severity in northern La Libertad during El Niño,0.0,0.0,0.0,0.0,1.0,0.0
+2006-2007,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,1.0,0.0,4,4.0,11.0,High,Increased severity in higher altitudes during El Niño,0.0,0.0,1.0,0.0,0.0,0.0
+2006-2007,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,1.0,0.0,4,4.0,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2006-2007,Very High (El Niño),1.0,0.0,1.0,0.0,0.0,1.0,0.0,4,4.0,10.5,High,Increased severity in northern La Libertad during El Niño,0.0,0.0,0.0,0.0,1.0,0.0
+2006-2007,High (El Niño),0.875,0.0,0.0,1.0,0.0,1.0,0.0,3,2.625,11.0,High,Increased severity in higher altitudes during El Niño,0.0,0.0,1.0,0.0,0.0,0.0
+2006-2007,High (El Niño),0.875,0.0,0.0,1.0,0.0,1.0,0.0,3,2.625,11.0,Very High,Consistently very high severity across all years,0.0,0.0,0.0,1.0,0.0,0.0
+2006-2007,High (El Niño),0.875,0.0,0.0,1.0,0.0,1.0,0.0,3,2.625,10.5,High,Increased severity in northern La Libertad during El Niño,0.0,0.0,0.0,0.0,1.0,0.0
