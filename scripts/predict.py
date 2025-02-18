@@ -4,7 +4,7 @@ import pickle
 import os
 
 # Define the model path
-MODEL_PATH = os.path.join("processed_data", "historical_disease_records", "data", "processed", "model", "potato_late_blight_model.pkl")
+MODEL_PATH = os.path.join("processed_data", "historical_disease_records", "data", "processed", "model", "trained_model.pkl")
 
 # Function to load the trained model
 def load_model():
