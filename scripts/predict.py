@@ -1,6 +1,11 @@
+import argparse
+import pandas as pd
 import pickle
 import os
 
+print("🚀 Running predict.py... This line should ALWAYS appear!")
+
+# Function to load the trained model
 def load_model():
     print("🔍 Entering load_model()...")
 
@@ -19,10 +24,8 @@ def load_model():
         print(f"❌ Error loading model: {e}")
         exit(1)
 
-
+# Function to make predictions
 def predict(input_file):
-    import pandas as pd
-
     print(f"🔍 Loading input file: {input_file}")
 
     # Load the input dataset
@@ -42,14 +45,16 @@ def predict(input_file):
     print(f"✅ Model expects features: {expected_features}")
 
     missing_features = [f for f in expected_features if f not in data.columns]
+    
     if missing_features:
         print(f"⚠ Warning: Missing features in input file: {missing_features}")
 
-    # Reorder columns and fill missing ones with 0
+    # **Fill missing features with default values (0)**
     for feature in missing_features:
-        data[feature] = 0  
+        data[feature] = 0  # You can change this to another default value if needed
 
-    data = data[expected_features]  # Ensure order matches model
+    # Reorder columns to match model's expectations
+    data = data[expected_features]  
 
     print("🔍 Making predictions...")
 
@@ -69,9 +74,9 @@ def predict(input_file):
     data.to_csv(output_file, index=False)
     print(f"📂 Results saved to: {output_file}")
 
+# Command-line argument parsing
 if __name__ == "__main__":
     print("🚀 Script started")
-    import argparse
     
     parser = argparse.ArgumentParser(description="Run the late blight prediction model on input data.")
     parser.add_argument("--input", type=str, required=True, help="Path to the input CSV file")
@@ -80,4 +85,3 @@ if __name__ == "__main__":
     print(f"🔍 Input file received: {args.input}")
 
     predict(args.input)
-
