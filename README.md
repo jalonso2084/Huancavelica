@@ -115,4 +115,20 @@ This project is open-source under the MIT License. Feel free to use, modify, and
 📩 Email: [jorgealonso24@gmail.com]
 💼 LinkedIn: [https://www.linkedin.com/in/jorgeluisalonso/]
 
+📚 References
+This project is based on scientific research in late blight prediction and machine learning methodology.
+
+🔬 Methodology Papers:
+Luo et al., 2024 – Large language models surpass human experts in predicting neuroscience results. Nature Human Behaviour. DOI:10.1038/s41562-024-02046-9
+Shimabucoro et al., 2024 – LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives. Proceedings of the 2024 Conference on EMNLP. DOI:10.18653/v1/2024.emnlp-main.521
+
+📊 Data Sources for Training & Evaluation:
+Giraldo et al., 2010 – Severity of potato late blight in agricultural areas of Peru. Revista Peruana Geo-Atmosferica.
+Gastelo et al., 2021 – Identification of Elite Potato Clones with Resistance to Late Blight Through Participatory Varietal Selection in Peru. Potato Research. DOI:10.1007/s11540-021-09495-z
+Haan & Juarez, 2010 – Land use and potato genetic resources in Huancavelica, central Peru. Journal of Land Use Science. DOI:10.1080/1747423X.2010.500681
+Zevallos et al., 2021 – First signs of late blight resistance in traditional native potatoes of Pasco—Peru. Agriculture & Food Security. DOI:10.1186/s40066-021-00330-9
+Perez et al., 2022 – Farmer Perceptions Related to Potato Production and Late Blight Management in Two Communities in the Peruvian Andes. Frontiers in Sustainable Food Systems. DOI:10.3389/fsufs.2022.873490
+Saffer et al., 2024 – Reconstructing historic and modern potato late blight outbreaks using text analytics. Scientific Reports. DOI:10.1038/s41598-024-52870-2
+📖 For full reference details, see REFERENCES.md.
+
 🚀 Let's use AI to revolutionize potato farming in Huancavelica!
