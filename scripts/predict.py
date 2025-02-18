@@ -1,3 +1,25 @@
+import pickle
+import os
+
+def load_model():
+    print("🔍 Entering load_model()...")
+
+    model_path = os.path.join("processed_data", "historical_disease_records", "data", "processed", "model", "trained_model.pkl")
+
+    try:
+        print(f"🔍 Attempting to load model from: {model_path}")
+        with open(model_path, "rb") as file:
+            model = pickle.load(file)
+        print("✅ Model loaded successfully!")
+        return model
+    except FileNotFoundError:
+        print(f"❌ Error: Model file not found at {model_path}")
+        exit(1)
+    except Exception as e:
+        print(f"❌ Error loading model: {e}")
+        exit(1)
+
+
 def predict(input_file):
     import pandas as pd
 
@@ -46,3 +68,16 @@ def predict(input_file):
     output_file = "predictions.csv"
     data.to_csv(output_file, index=False)
     print(f"📂 Results saved to: {output_file}")
+
+if __name__ == "__main__":
+    print("🚀 Script started")
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Run the late blight prediction model on input data.")
+    parser.add_argument("--input", type=str, required=True, help="Path to the input CSV file")
+    args = parser.parse_args()
+    
+    print(f"🔍 Input file received: {args.input}")
+
+    predict(args.input)
+
