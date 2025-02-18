@@ -129,6 +129,7 @@ Haan & Juarez, 2010 – Land use and potato genetic resources in Huancavelica, c
 Zevallos et al., 2021 – First signs of late blight resistance in traditional native potatoes of Pasco—Peru. Agriculture & Food Security. DOI:10.1186/s40066-021-00330-9
 Perez et al., 2022 – Farmer Perceptions Related to Potato Production and Late Blight Management in Two Communities in the Peruvian Andes. Frontiers in Sustainable Food Systems. DOI:10.3389/fsufs.2022.873490
 Saffer et al., 2024 – Reconstructing historic and modern potato late blight outbreaks using text analytics. Scientific Reports. DOI:10.1038/s41598-024-52870-2
+
 📖 For full reference details, see REFERENCES.md.
 
 🚀 Let's use AI to revolutionize potato farming in Huancavelica!
