@@ -45,18 +45,26 @@ def predict(input_file):
     print(f"✅ Model expects features: {expected_features}")
 
     missing_features = [f for f in expected_features if f not in data.columns]
-    
+
     if missing_features:
         print(f"⚠ Warning: Missing features in input file: {missing_features}")
 
     # **Fill missing features with default values (0)**
-    for feature in missing_features:
-        data[feature] = 0  # You can change this to another default value if needed
+   for feature in missing_features:
+    if feature in model.feature_names_in_:  # Check if feature exists in training data
+        default_value = data.mean().get(feature, 0)  # Use mean value, default to 0 if not found
+    else:
+        default_value = 0  # If the feature is completely unknown, use 0
+    data[feature] = default_value
+
 
     # Reorder columns to match model's expectations
-    data = data[expected_features]  
+    data = data[expected_features]
 
-    print("🔍 Making predictions...")
+    print("🔍 Final input data being fed to the model:")
+    print(data.head())  # Print the first few rows to check values
+
+    print("🔍 Making predictions...")  # ✅ Indentation is now fixed
 
     # Make predictions
     try:
