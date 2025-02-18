@@ -1,51 +1,33 @@
-import argparse
-import pandas as pd
-import pickle
-import os
-
-# Define the model path
-MODEL_PATH = os.path.join("processed_data", "historical_disease_records", "data", "processed", "model", "trained_model.pkl")
-
-# Function to load the trained model
-def load_model():
-    try:
-        with open(MODEL_PATH, "rb") as file:
-            model = pickle.load(file)
-        return model
-    except FileNotFoundError:
-        print("❌ Error: Model file not found at", MODEL_PATH)
-        exit(1)
-
-# Function to make predictions
 def predict(input_file):
+    import pandas as pd
+    
     # Load the input dataset
     data = pd.read_csv(input_file)
-    
-    # Drop the target column if it exists
-    if "disease_risk" in data.columns:
-        data = data.drop(columns=["disease_risk"])
 
     # Load the trained model
     model = load_model()
+
+    # Ensure all model-required features are in the input data
+    expected_features = model.feature_names_in_
+    missing_features = [f for f in expected_features if f not in data.columns]
+
+    if missing_features:
+        print(f"⚠ Warning: The following expected features are missing from the input file: {missing_features}")
     
+    # Reorder columns and fill missing ones with 0 (or appropriate defaults)
+    for feature in missing_features:
+        data[feature] = 0  # Use 0 or a suitable default value
+
+    data = data[expected_features]  # Ensure order matches model
+
     # Make predictions
     predictions = model.predict(data)
-    
-    # Display results
+
+    # Display and save results
     data["Predicted_Disease_Risk"] = predictions
     print("✅ Predictions completed!")
     print(data)
 
-    # Save the output
     output_file = "predictions.csv"
     data.to_csv(output_file, index=False)
     print(f"📂 Results saved to: {output_file}")
-
-# Command-line argument parsing
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run the late blight prediction model on input data.")
-    parser.add_argument("--input", type=str, required=True, help="Path to the input CSV file")
-    args = parser.parse_args()
-
-    # Run the prediction function
-    predict(args.input)
