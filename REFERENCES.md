@@ -67,6 +67,25 @@ The datasets used to train this model were derived from the following research p
 
 ---
 
+## 🌍 Additional Resources  
+### 📌 **Climate Data Sources**
+🚨 **No climate data files found.** If available, add datasets to `processed_data/climate/`.
+
+### 📌 **Historical Disease Outbreaks**
+Stored in **`historical_disease_records/`**, including:
+- [`historical_disease_records.csv`](historical_disease_records/historical_disease_records.csv)
+- [`disease_severity_data.csv`](historical_disease_records/disease_severity_data.csv)
+- [`Disease_Symptoms.csv`](historical_disease_records/Disease_Symptoms.csv)
+
+### 📌 **External Databases Used**
+Located in **`database/`**, including:
+- [`database.py`](database/database.py)
+- [`database.cpython-313.pyc`](database/database.cpython-313.pyc)
+- [`database.pyi`](database/database.pyi)
+- [`symbol_database.pyi`](database/symbol_database.pyi)
+
+---
+
 ## 🏆 Why This Matters  
 - 🔹 **Our model is built using cutting-edge AI methodologies** (Luo et al., Shimabucoro et al.).
 - 🔹 **To ensure reliability, we use Prediction-Powered Inference (PPI)** (Broska et al.).
@@ -77,11 +96,4 @@ The datasets used to train this model were derived from the following research p
 
 ---
 
-## 🌍 Additional Resources  
-- **Climate Data Sources:** [Add relevant datasets]  
-- **Historical Disease Outbreaks:** [Link if available]  
-- **External Databases Used:** [Link if available]  
-
----
-
-## 🚀 Thank You for Supporting Open-Source Agricultural AI! 🌱  
+## 🚀 **Thank You for Supporting Open-Source Agricultural AI!** 🌱
