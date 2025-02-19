@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Default is Ubuntu
 
     steps:
       - name: 🛠 Checkout Repository
@@ -26,6 +26,19 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🔬 Run Unit Tests
+  test-windows:
+    runs-on: windows-latest  # This job runs on Windows
+
+    steps:
+      - name: 🛠 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: 📦 Install Windows-Specific Dependencies
         run: |
-          pytest tests/ --maxfail=1 --disable-warnings
+          pip install --upgrade pip
+          pip install -r requirements-windows.txt
