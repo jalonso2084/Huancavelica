@@ -20,12 +20,15 @@ This repository provides an **AI-powered model** to help farmers and researchers
 ## ⚡ Get Started in 5 Steps!
 
 ### 1️⃣ Clone This Repository  
-```
+```bash
 git clone https://github.com/jalonso2084/Huancavelica.git
 cd Huancavelica
 2️⃣ Set Up Python & Install Requirements
 Recommended Python version: 3.9+
 
+bash
+Copy
+Edit
 # Create a virtual environment (Recommended)
 python3 -m venv venv
 source venv/bin/activate  # macOS/Linux
@@ -35,11 +38,16 @@ venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 👉 Using Conda?
 
+bash
+Copy
+Edit
 conda create --name blight-prediction python=3.9
 conda activate blight-prediction
 pip install -r requirements.txt
 3️⃣ Run a Prediction on Sample Data
-
+bash
+Copy
+Edit
 python scripts/predict.py --input sample_data/weather_sample.csv
 ✅ The results will be saved in predictions.csv.
 
@@ -59,15 +67,17 @@ Climatic_Moderate El Niño, Climatic_Weak-Moderate El Niño	ENSO influence
 Fungicide Applications	Frequency of fungicide use
 Example CSV File Format
 mathematica
-
-
+Copy
+Edit
 Latitude,Longitude,Types of Potatoes Grown,Region/Country,Farming Practices,pH,Bulk_Density,Organic_Carbon,CEC,Clay_Content,Sand_Content,Silt_Content,Climatic_Climate Variability,Climatic_Moderate El Niño,Climatic_Weak-Moderate El Niño,Fungicide Applications
 -12.0433,-77.0283,Yungay,Peru,Traditional,5.8,1.2,2.5,14.3,35,40,25,Moderate,Yes,No,2
 -13.1631,-72.5450,Cancha,Peru,Intensive,6.1,1.5,2.1,13.8,30,45,25,High,No,Yes,1
 💡 CSV Formatting Tip: Make sure your CSV file is comma-separated and doesn’t contain extra spaces or missing values.
 
 🔍 Run Predictions on Your Data
-
+bash
+Copy
+Edit
 python scripts/predict.py --input your_data.csv
 🔮 Understanding the Output
 The predictions.csv file contains:
@@ -120,16 +130,3 @@ This project is based on scientific research in late blight prediction and machi
 📅 Phase 5: Continuous Improvement
 
 🚀 Ready to make an impact? Fork, contribute, and let’s improve potato disease prediction with AI! 🥔🔥
-
-yaml
----
-
-### 🎯 **Final Enhancements in This Version**
-✔ **Added sample input CSV file format** under "Using Your Own Data"  
-✔ **Detailed risk classification** in "Understanding the Output"  
-✔ **Well-structured, easy-to-follow formatting**  
-✔ **Everything researchers need to get started quickly**  
-
----
-
-🚀 **Your README is now at a professional, research-friendly level!** Let me know if you need further refinements. 🥔🔥
