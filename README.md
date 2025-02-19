@@ -20,14 +20,15 @@ This repository provides an **AI-powered model** to help farmers and researchers
 ## ⚡ Get Started in 5 Steps!
 
 ### 1️⃣ Clone This Repository  
-```
+```bash
 git clone https://github.com/jalonso2084/Huancavelica.git
 cd Huancavelica
-
 2️⃣ Set Up Python & Install Requirements
 Recommended Python version: 3.9+
 
-
+bash
+Copy
+Edit
 # Create a virtual environment (Recommended)
 python3 -m venv venv
 source venv/bin/activate  # macOS/Linux
@@ -35,66 +36,65 @@ venv\Scripts\activate  # Windows
 
 # Install dependencies
 pip install -r requirements.txt
-
 👉 Using Conda?
 
-
+bash
+Copy
+Edit
 conda create --name blight-prediction python=3.9
 conda activate blight-prediction
 pip install -r requirements.txt
-
 3️⃣ Run a Prediction on Sample Data
-
-
+bash
+Copy
+Edit
 python scripts/predict.py --input sample_data/weather_sample.csv
-
 ✅ The results will be saved in predictions.csv.
 
 🧪 Using Your Own Data
 📌 Required Columns:
 Your dataset should contain the following columns:
-Column Name
-Description
-Latitude, Longitude
-Geographic coordinates of the field
-Types of Potatoes Grown
-Variety classification
-Region/Country
-Location details
-Farming Practices
-Traditional or intensive farming methods
-pH, Bulk_Density, Organic_Carbon
-Soil characteristics
-CEC, Clay_Content, Sand_Content, Silt_Content
-Soil texture properties
-Climatic_Climate Variability
-Historical climate variations
-Climatic_Moderate El Niño, Climatic_Weak-Moderate El Niño
-ENSO influence
-Fungicide Applications
-Frequency of fungicide use
+
+Column Name	Description
+Latitude, Longitude	Geographic coordinates of the field
+Types of Potatoes Grown	Variety classification
+Region/Country	Location details
+Farming Practices	Traditional or intensive farming methods
+pH, Bulk_Density, Organic_Carbon	Soil characteristics
+CEC, Clay_Content, Sand_Content, Silt_Content	Soil texture properties
+Climatic_Climate Variability	Historical climate variations
+Climatic_Moderate El Niño, Climatic_Weak-Moderate El Niño	ENSO influence
+Fungicide Applications	Frequency of fungicide use
+Example CSV File Format
+mathematica
+Copy
+Edit
+Latitude,Longitude,Types of Potatoes Grown,Region/Country,Farming Practices,pH,Bulk_Density,Organic_Carbon,CEC,Clay_Content,Sand_Content,Silt_Content,Climatic_Climate Variability,Climatic_Moderate El Niño,Climatic_Weak-Moderate El Niño,Fungicide Applications
+-12.0433,-77.0283,Yungay,Peru,Traditional,5.8,1.2,2.5,14.3,35,40,25,Moderate,Yes,No,2
+-13.1631,-72.5450,Cancha,Peru,Intensive,6.1,1.5,2.1,13.8,30,45,25,High,No,Yes,1
+💡 CSV Formatting Tip: Make sure your CSV file is comma-separated and doesn’t contain extra spaces or missing values.
 
 🔍 Run Predictions on Your Data
-
-
+bash
+Copy
+Edit
 python scripts/predict.py --input your_data.csv
-
-
 🔮 Understanding the Output
 The predictions.csv file contains:
-Latitude
-Longitude
-Predicted Risk
--12.0433
--77.0283
-High
--13.1631
--72.5450
-Medium
 
+Latitude	Longitude	Predicted Risk
+-12.0433	-77.0283	High
+-13.1631	-72.5450	Medium
 ✔ Low Risk: No immediate action required.
-✔ Medium Risk: Consider preventive measures.
-✔ High Risk: Immediate intervention recommended (e.g., fungicide application).
+✔ Medium Risk: Consider preventive measures such as adjusting irrigation or applying fungicides as a precaution.
+✔ High Risk: Immediate intervention recommended, including applying fungicide within the next 3 days.
+
+🧠 How Are Risk Levels Determined?
+The risk level is based on the predicted probability of a late blight outbreak.
+If the probability > 70%, the risk is classified as High.
+If the probability is between 40-70%, it is classified as Medium.
+If the probability is below 40%, it is classified as Low.
+📌 Note: These thresholds are based on historical outbreak patterns and may be adjusted as new data is collected.
 
 🚀 Future Improvements
 ✅ Improve model accuracy using hyperparameter tuning (Grid Search, Bayesian Optimization).
@@ -115,19 +115,11 @@ This project is open-source under the MIT License.
 📬 Contact
 📧 Email: jorgealonso24@gmail.com
 💼 LinkedIn: Jorge Luis Alonso
+
 🚀 Let's use AI to transform potato farming in Huancavelica! 🌱
 
 📚 References
 This project is based on scientific research in late blight prediction and machine learning methodology.
-📖 See full references in REFERENCES.md.
-🔬 Methodology Papers:
-Luo et al., 2024 – Large language models surpass human experts in predicting neuroscience results. DOI:10.1038/s41562-024-02046-9
-Shimabucoro et al., 2024 – LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives. DOI:10.18653/v1/2024.emnlp-main.521
-📊 Data Sources for Training & Evaluation:
-Giraldo et al., 2010 – Severity of potato late blight in Peru.
-Gastelo et al., 2021 – Identification of Elite Potato Clones with Resistance to Late Blight.
-Haan & Juarez, 2010 – Land use and potato genetic resources in Huancavelica.
-Saffer et al., 2024 – Text analytics for reconstructing potato late blight outbreaks.
 📖 See full references in REFERENCES.md.
 
 🔧 Development Roadmap
@@ -137,13 +129,20 @@ Saffer et al., 2024 – Text analytics for reconstructing potato late blight out
 📅 Phase 4: Deployment & Testing
 📅 Phase 5: Continuous Improvement
 
-🏆 Summary of Improvements in This README:
-✅ More details on AI model and scripts
-✅ Clear installation steps (Python version, virtual environments, Conda alternative)
-✅ Expanded usage instructions with input data format and example outputs
-✅ Detailed explanation of future improvements
-✅ Added a separate REFERENCES.md for citation details
-✅ Linked LICENSE file for proper licensing
-
 🚀 Ready to make an impact? Fork, contribute, and let’s improve potato disease prediction with AI! 🥔🔥
 
+yaml
+Copy
+Edit
+
+---
+
+### 🎯 **Final Enhancements in This Version**
+✔ **Added sample input CSV file format** under "Using Your Own Data"  
+✔ **Detailed risk classification** in "Understanding the Output"  
+✔ **Well-structured, easy-to-follow formatting**  
+✔ **Everything researchers need to get started quickly**  
+
+---
+
+🚀 **Your README is now at a professional, research-friendly level!** Let me know if you need further refinements. 🥔🔥
