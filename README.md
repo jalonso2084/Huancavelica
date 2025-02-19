@@ -62,8 +62,8 @@ This project is open-source under the MIT License.
 This project is based on scientific research in late blight prediction and machine learning methodology.
 
 🔬 Methodology Papers:
--- Luo et al., 2024 – Large language models surpass human experts in predicting neuroscience results. Nature Human Behaviour. DOI:10.1038/s41562-024-02046-9
--- Shimabucoro et al., 2024 – LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives. Proceedings of the 2024 Conference on EMNLP. DOI:10.18653/v1/2024.emnlp-main.521
+Luo et al., 2024 – Large language models surpass human experts in predicting neuroscience results. Nature Human Behaviour. DOI:10.1038/s41562-024-02046-9
+Shimabucoro et al., 2024 – LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives. Proceedings of the 2024 Conference on EMNLP. DOI:10.18653/v1/2024.emnlp-main.521
 
 📊 Data Sources for Training & Evaluation:
 Giraldo et al., 2010 – Severity of potato late blight in agricultural areas of Peru. Revista Peruana Geo-Atmosferica.
