@@ -73,16 +73,16 @@ The datasets used to train this model were derived from the following research p
 
 ### 📌 **Historical Disease Outbreaks**
 Stored in **`historical_disease_records/`**, including:
-- [`historical_disease_records.csv`](historical_disease_records/historical_disease_records.csv)
-- [`disease_severity_data.csv`](historical_disease_records/disease_severity_data.csv)
-- [`Disease_Symptoms.csv`](historical_disease_records/Disease_Symptoms.csv)
+- historical_disease_records.csv
+- disease_severity_data.csv
+- Disease_Symptoms.csv
 
 ### 📌 **External Databases Used**
 Located in **`database/`**, including:
-- [`database.py`](database/database.py)
-- [`database.cpython-313.pyc`](database/database.cpython-313.pyc)
-- [`database.pyi`](database/database.pyi)
-- [`symbol_database.pyi`](database/symbol_database.pyi)
+- database.py
+- database.cpython-313.pyc
+- database.pyi
+- symbol_database.pyi
 
 ---
 
