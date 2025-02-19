@@ -23,10 +23,9 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🔍 Run Unit Tests
+      - name: 🔬 Run Unit Tests
         run: |
-          pytest tests/
+          pytest tests/ --maxfail=1 --disable-warnings
