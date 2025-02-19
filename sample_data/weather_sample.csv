@@ -1,5 +1,3 @@
-﻿temperature,humidity,soil_moisture,disease_risk
-18,85,30,High
-22,70,40,Medium
-16,90,25,High
-20,65,35,Low
+Latitude_left,Longitude_left,Types of Potatoes Grown,Region/Country,Criteria for Selection,Farming Practices,pH_left,Bulk_Density_left,Organic_Carbon_left,CEC_left,Clay_Content_left,Sand_Content_left,Silt_Content_left,Climatic_Climate Variability,Climatic_Moderate El Niño, Increased Humidity,Climatic_Weak-Moderate El Niño, Excessive Rainfall,Fungicide Applications (Proxy for Severity)
+-12.05,-76.98,Native,Peru,Traditional,Small-scale,5.8,1.2,3.0,15,20,45,35,High,Moderate,Weak,3
+-12.10,-76.95,Commercial,Peru,Modern,Large-scale,6.0,1.4,2.8,12,18,50,32,Low,High,Moderate,5
