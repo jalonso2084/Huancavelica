@@ -1,135 +1,121 @@
-📌 Huancavelica: AI-Powered Late Blight Prediction Model
-🌱 An AI-driven system for forecasting late blight outbreaks in potato crops, optimizing disease management in Huancavelica, Peru.
+# 🌱 Huancavelica AI-Powered Late Blight Prediction Model 🚀
 
-📖 Overview
-Late blight, caused by Phytophthora infestans, is one of the most devastating potato diseases, leading to significant yield losses. This project leverages machine learning, weather data, and historical disease records to predict outbreaks and support data-driven decision-making.
+### **🔍 Overview**
+Late blight, caused by *Phytophthora infestans*, is one of the most devastating potato diseases, leading to major yield losses. This project leverages **machine learning** to predict disease outbreaks, helping farmers make **data-driven decisions**.
 
-This repository contains:
+The model analyzes **weather, soil, and farming practices** to assess **late blight risk** in Huancavelica, Peru.
 
-A trained AI model for predicting late blight outbreaks.
-Python scripts to preprocess data and run predictions.
-Jupyter Notebooks for reproducibility.
-Example datasets to help researchers test the model.
-✅ Want a user-friendly interface?
-🔗 Visit the Huancavelica AI Web App (Coming Soon!) to test predictions online! 🚀
+---
 
-📂 Repository Structure
-bash
+## 📂 **Repository Structure**
+Huancavelica/ │── sample_data/ # Example datasets for testing │── processed_data/ # Preprocessed datasets used for training │── scripts/ # Python scripts for predictions │ ├── predict.py # Runs the model to make predictions │── model/ # Trained AI model │── notebooks/ # Jupyter notebooks for experimentation │── README.md # Project documentation │── requirements.txt # Python dependencies
+
+yaml
 Copy
 Edit
-📂 Huancavelica/
-│── 📂 data/                          # Raw & cleaned datasets
-│── 📂 sample_data/                    # Small example datasets for testing
-│── 📂 weather-data/                   # Climate and meteorological data
-│── 📂 historical_disease_records/     # Past blight occurrences
-│── 📂 soil_data/                      # Soil properties affecting disease spread
-│── 📂 model/                          # Trained model & parameters
-│── 📂 notebooks/                      # Jupyter notebooks for reproducibility
-│── 📂 scripts/                        # Python scripts for preprocessing & training
-│── 📂 website/                        # Web-based model deployment
-│── 📄 README.md                        # Project documentation
-│── 📄 INSTALL.md                        # Step-by-step setup instructions
-│── 📄 API.md                           # API documentation for website integration
-│── 📄 REFERENCES.md                     # Research citations & papers
-│── 📄 .gitignore                        # Prevents unnecessary files from being tracked
-│── 📄 requirements.txt                  # Python dependencies
-⚡ Quick Start Guide
-1️⃣ Clone the Repository
-bash
-Copy
-Edit
+
+---
+
+## ⚡ **Quick Start Guide**
+### **1️⃣ Clone the Repository**
+```bash
 git clone https://github.com/jalonso2084/Huancavelica.git
 cd Huancavelica
-2️⃣ Install Dependencies
-Ensure you have Python 3.8+ installed, then run:
+2️⃣ Set Up Your Virtual Environment
+Ensure you're using Python 3.8+, then create and activate a virtual environment:
 
+bash
+Copy
+Edit
+python -m venv venv
+source venv/bin/activate  # On macOS/Linux
+venv\Scripts\activate     # On Windows
+3️⃣ Install Dependencies
 bash
 Copy
 Edit
 pip install -r requirements.txt
-3️⃣ Run the Model
-To test the model on sample weather data, use:
-
+🧪 Running a Test Prediction
+4️⃣ Run the Model on Sample Data
 bash
 Copy
 Edit
 python scripts/predict.py --input sample_data/weather_sample.csv
-4️⃣ Use the Jupyter Notebook (Recommended)
-For a step-by-step guide, open the interactive notebook:
+✅ If everything works, you should see:
+
+css
+Copy
+Edit
+📂 Results saved to: predictions.csv
+5️⃣ Check the Predictions
+Open predictions.csv to view results:
 
 bash
 Copy
 Edit
-jupyter notebook notebooks/model_test.ipynb
-🔬 Testing with Your Own Data
-If you have your own dataset:
+cat predictions.csv  # On macOS/Linux
+type predictions.csv # On Windows
+Example output:
 
-Ensure it follows this format:
-bash
+diff
 Copy
 Edit
-date,temperature,humidity,soil_moisture,precipitation
-2024-02-01,18.5,85,30,2.1
-Run:
+Latitude, Longitude, pH, Organic_Carbon, Clay_Content, Predicted_Disease_Risk
+-12.05, -76.98, 5.8, 3.0, 20, 0
+-12.10, -76.95, 6.0, 2.8, 18, 1
+Here, 0 = Low Risk, 1 = High Risk.
+
+🔬 Using Your Own Data
+You can test the model with your own dataset.
+Ensure your CSV file has these columns:
+
+mathematica
+Copy
+Edit
+Latitude, Longitude, Types of Potatoes Grown, Region/Country, Criteria for Selection,
+Farming Practices, pH, Bulk_Density, Organic_Carbon, CEC, Clay_Content,
+Sand_Content, Silt_Content, Climatic_Climate Variability, 
+Climatic_Moderate El Niño, Climatic_Weak-Moderate El Niño, Fungicide Applications
+Run Predictions on Your Data
 bash
 Copy
 Edit
 python scripts/predict.py --input your_data.csv
-🌍 API & Web Interface
-🚀 The model will soon be accessible via a REST API & Web Dashboard!
-
-🔗 Visit: Huancavelica AI Web App (Coming Soon!)
-
-For API access:
-
-bash
-Copy
-Edit
-curl -X POST "https://huancavelica-ai.com/api/predict" -H "Content-Type: application/json" -d '{"temperature": 20, "humidity": 85, "soil_moisture": 30}'
-Expected response:
-
-json
-Copy
-Edit
-{
-    "prediction": "High Risk",
-    "confidence": 92.4
-}
-📖 More details in API.md.
-
-🛠 Future Improvements
-✅ Better Accuracy: Enhance model predictions with real-time weather API integration.
-✅ Interactive Dashboard: Deploy a farmer-friendly web app for disease risk monitoring.
-✅ More Data Sources: Expand training datasets for different potato-growing regions.
+🌍 Future Improvements
+✅ Enhance Model Accuracy – Add more training data.
+✅ Deploy as a Web App – Allow users to enter values via a website.
+✅ Expand to Other Crops – Apply AI to predict diseases in different crops.
 
 🤝 Contributing
-We welcome contributions from researchers, data scientists, and agronomists.
+We welcome contributions! 🚀
 
-Open an issue or feature request 📌
-Submit a pull request 💡
-Share additional datasets 📚
+Ways to Contribute:
+Open an issue 📌
+Submit a pull request 🔄
+Suggest new datasets 📊
 📜 License
-This project is open-source under the MIT License. Feel free to use, modify, and share it!
+This project is open-source under the MIT License.
+Feel free to use, modify, and share it! 🌱
 
 📬 Contact
-📩 Email: [jorgealonso24@gmail.com]
-💼 LinkedIn: [https://www.linkedin.com/in/jorgeluisalonso/]
+📧 Email: jorgealonso24@gmail.com
+💼 LinkedIn: Jorge Alonso
 
-📚 References
-This project is based on scientific research in late blight prediction and machine learning methodology.
+🚀 Let's use AI to revolutionize potato farming in Huancavelica! 🌱
 
-🔬 Methodology Papers:
--- Luo et al., 2024 – Large language models surpass human experts in predicting neuroscience results. Nature Human Behaviour. DOI:10.1038/s41562-024-02046-9
--- Shimabucoro et al., 2024 – LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives. Proceedings of the 2024 Conference on EMNLP. DOI:10.18653/v1/2024.emnlp-main.521
+yaml
+Copy
+Edit
 
-📊 Data Sources for Training & Evaluation:
--- Giraldo et al., 2010 – Severity of potato late blight in agricultural areas of Peru. Revista Peruana Geo-Atmosferica.
--- Gastelo et al., 2021 – Identification of Elite Potato Clones with Resistance to Late Blight Through Participatory Varietal Selection in Peru. Potato Research. DOI:10.1007/s11540-021-09495-z
--- Haan & Juarez, 2010 – Land use and potato genetic resources in Huancavelica, central Peru. Journal of Land Use Science. DOI:10.1080/1747423X.2010.500681
--- Zevallos et al., 2021 – First signs of late blight resistance in traditional native potatoes of Pasco—Peru. Agriculture & Food Security. DOI:10.1186/s40066-021-00330-9
--- Perez et al., 2022 – Farmer Perceptions Related to Potato Production and Late Blight Management in Two Communities in the Peruvian Andes. Frontiers in Sustainable Food Systems. DOI:10.3389/fsufs.2022.873490
--- Saffer et al., 2024 – Reconstructing historic and modern potato late blight outbreaks using text analytics. Scientific Reports. DOI:10.1038/s41598-024-52870-2
+---
 
-📖 For full reference details, see REFERENCES.md.
+### **🚀 Next Steps**
+1️⃣ **Copy & Paste the new `README.md` into your repository.**  
+2️⃣ **Commit & Push to GitHub**:
+   ```bash
+   git add README.md
+   git commit -m "Updated README with usage instructions"
+   git push origin main
+3️⃣ Share the repo with others! 🎉
 
-🚀 Let's use AI to revolutionize potato farming in Huancavelica!
+🚀 Let me know if you need any modifications! 😊
