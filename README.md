@@ -1,7 +1,26 @@
-AI-Powered Late Blight Prediction API 🥔
+# **AI-Powered Late Blight Prediction System** 🌱🔬  
+**Huancavelica, Peru** | **Machine Learning | Prediction-Powered Inference (PPI) | GPT-4-turbo Explainability**  
 
-🚀 Predict potato late blight outbreaks using AI!
-This repository provides an AI-powered model to help farmers and researchers analyze weather, soil, and farming practices to determine disease risk levels in Huancavelica, Peru.
+![Project Banner](path_to_image.png) *(Add a relevant image if available)*  
+
+---
+
+## 📌 **Project Overview**  
+This repository contains the **AI-powered Late Blight Prediction System**, which forecasts **late blight outbreaks** in **potato crops** using **machine learning models**. The system integrates:  
+
+✅ **Historical weather & soil data** for model training  
+✅ **Prediction-Powered Inference (PPI)** to validate predictions  
+✅ **GPT-4-turbo API** for human-readable explanations  
+✅ **Web-based dashboard** for real-time prediction results  
+
+---
+
+## 🚀 **Key Features**  
+- 🌡 **Weather-based risk analysis** using **temperature, humidity, and precipitation**  
+- 🌍 **Regional adaptation for Huancavelica, Peru**  
+- 🧠 **Machine learning models** (**Random Forest, XGBoost, LightGBM**) for prediction  
+- 📊 **PPI Verification Framework** for statistical validation  
+- 💡 **AI-powered explanations** with **GPT-4-turbo**  
 
 
 
