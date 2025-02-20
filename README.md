@@ -1,171 +1,215 @@
-# **AI-Powered Late Blight Prediction System** 🌱🔬  
-**Huancavelica, Peru** | **Machine Learning | Prediction-Powered Inference (PPI) | GPT-4-turbo Explainability**  
-
-![Project Banner](path_to_image.png) *(Add a relevant image if available)*  
-
----
-
-## 📌 **Project Overview**  
-This repository contains the **AI-powered Late Blight Prediction System**, which forecasts **late blight outbreaks** in **potato crops** using **machine learning models**. The system integrates:  
-
-✅ **Historical weather & soil data** for model training  
-✅ **Prediction-Powered Inference (PPI)** to validate predictions  
-✅ **GPT-4-turbo API** for human-readable explanations  
-✅ **Web-based dashboard** for real-time prediction results  
-
----
-
-## 🚀 **Key Features**  
-- 🌡 **Weather-based risk analysis** using **temperature, humidity, and precipitation**  
-- 🌍 **Regional adaptation for Huancavelica, Peru**  
-- 🧠 **Machine learning models** (**Random Forest, XGBoost, LightGBM**) for prediction  
-- 📊 **PPI Verification Framework** for statistical validation  
-- 💡 **AI-powered explanations** with **GPT-4-turbo**  
+🥔 Huancavelica AI-Powered Late Blight Prediction Model 🌍
 
 
+
+🚀 Predict potato late blight outbreaks using AI!
+
+This repository provides an AI-powered model to help farmers and researchers analyze weather, soil, and farming practices to determine disease risk levels in Huancavelica, Peru.
 
 📂 What's Inside?
 
-AI Model: A Random Forest model trained to predict late blight risk using weather, soil conditions, and farming practices.
+
+
+AI Model: A Random Forest model trained to predict late blight risk using weather, soil conditions, and farming practices.
 
 Python Scripts:
 
-predict.py: Runs predictions on input data and saves results to predictions.csv.
+predict.py: Runs predictions on input data and saves results to predictions.csv.
 
 train.py: (Optional) Retrains the model with new data.
 
-Flask API: A RESTful API to serve PPI correlation results in real time.
+Sample Data: Example weather and soil data in CSV format for testing.
 
-Sample Data: Example weather and soil data in CSV format for testing.
+Jupyter Notebooks: Notebooks for data exploration, model training, and feature importance analysis.
 
-Jupyter Notebooks: Notebooks for data exploration, model training, and feature importance analysis.
-
-References: A list of scientific papers used for model training and evaluation (see REFERENCES.md).
+References: A list of scientific papers used for model training and evaluation (see REFERENCES.md).
 
 ⚡ Get Started in 5 Steps!
 
+
+
 1️⃣ Clone This Repository
 
-git clone https://github.com/jalonso2084/Huancavelica.git
-cd Huancavelica
+
+
+git clone https://github.com/jalonso2084/Huancavelica.gitcd Huancavelica
 
 2️⃣ Set Up Python & Install Requirements
 
 Recommended Python version: 3.9+
 
-# Create a virtual environment (Recommended)
-python3 -m venv venv
-source venv/bin/activate  # macOS/Linux
-venv\Scripts\activate  # Windows
 
-# Install dependencies
+
+bash
+
+Copy
+
+Edit# Create a virtual environment (Recommended)
+
+python3 -m venv venvsource venv/bin/activate # macOS/Linux
+
+venv\Scripts\activate # Windows# Install dependencies
+
 pip install -r requirements.txt
 
 👉 Using Conda?
 
+
+
+bash
+
+Copy
+
+Edit
+
 conda create --name blight-prediction python=3.9
+
 conda activate blight-prediction
+
 pip install -r requirements.txt
 
-🧪 Running Predictions
+3️⃣ Run a Prediction on Sample Data
 
-Run a Prediction on Sample Data
+bash
+
+Copy
+
+Edit
 
 python scripts/predict.py --input sample_data/weather_sample.csv
 
 ✅ The results will be saved in predictions.csv.
 
-Example Prediction Output
 
-{
-    "Latitude": -12.0433,
-    "Longitude": -77.0283,
-    "Predicted Risk": "High"
-}
 
-📡 Flask API for PPI Correlation
+🧪 Using Your Own Data
 
-This repository includes a Flask API to serve real-time PPI correlation results.
+📌 Required Columns:
 
-1️⃣ Start the API
+Your dataset should contain the following columns:
 
-python ppi_api.py
 
-2️⃣ Access the API
 
-Open in a browser:
+Column Name Description
 
-http://127.0.0.1:5000/ppi
+Latitude, Longitude Geographic coordinates of the field
 
-Or use curl in the terminal:
+Types of Potatoes Grown Variety classification
 
-curl http://127.0.0.1:5000/ppi
+Region/Country Location details
 
-3️⃣ Example API Response
+Farming Practices Traditional or intensive farming methods
 
-{
-    "PPI_Correlation": 0.905,
-    "CI_Lower": 0.3169,
-    "CI_Upper": 1.4938,
-    "Effective_Sample_Size": 6.78,
-    "GPT_Explanation": "AI predictions are highly reliable."
-}
+pH, Bulk_Density, Organic_Carbon Soil characteristics
 
-⚙️ Technical Details
+CEC, Clay_Content, Sand_Content, Silt_Content Soil texture properties
 
-Model Type: Random Forest Classifier
+Climatic_Climate Variability Historical climate variations
 
-Features Used: Temperature, humidity, soil pH, organic carbon, farming practices
+Climatic_Moderate El Niño, Climatic_Weak-Moderate El Niño ENSO influence
 
-Training Data Source: Historical late blight outbreak reports from Huancavelica, Peru
+Fungicide Applications Frequency of fungicide use
 
-Hyperparameters:
+Example CSV File Format
 
-n_estimators: 100
+mathematica
 
-max_depth: 10
+Copy
 
-min_samples_split: 5
+Edit
 
-🚀 Deployment Instructions
+Latitude,Longitude,Types of Potatoes Grown,Region/Country,Farming Practices,pH,Bulk_Density,Organic_Carbon,CEC,Clay_Content,Sand_Content,Silt_Content,Climatic_Climate Variability,Climatic_Moderate El Niño,Climatic_Weak-Moderate El Niño,Fungicide Applications
 
-To deploy this API on a cloud service (AWS, DigitalOcean, Render):
+-12.0433,-77.0283,Yungay,Peru,Traditional,5.8,1.2,2.5,14.3,35,40,25,Moderate,Yes,No,2
 
-1️⃣ Install Gunicorn for production:
+-13.1631,-72.5450,Cancha,Peru,Intensive,6.1,1.5,2.1,13.8,30,45,25,High,No,Yes,1
 
-pip install gunicorn
+💡 CSV Formatting Tip: Make sure your CSV file is comma-separated and doesn’t contain extra spaces or missing values.
 
-2️⃣ Run Flask as a background process:
 
-gunicorn -w 4 -b 0.0.0.0:5000 ppi_api:app
 
-3️⃣ To expose it publicly, use Ngrok:
+🔍 Run Predictions on Your Data
 
-ngrok http 5000
+bash
 
-Then, share the Ngrok link!
+Copy
+
+Edit
+
+python scripts/predict.py --input your_data.csv
+
+🔮 Understanding the Output
+
+The predictions.csv file contains:
+
+
+
+Latitude Longitude Predicted Risk
+
+-12.0433 -77.0283 High
+
+-13.1631 -72.5450 Medium
+
+✔ Low Risk: No immediate action required.
+
+✔ Medium Risk: Consider preventive measures such as adjusting irrigation or applying fungicides as a precaution.
+
+✔ High Risk: Immediate intervention recommended, including applying fungicide within the next 3 days.
+
+
+
+🧠 How Are Risk Levels Determined?
+
+The risk level is based on the predicted probability of a late blight outbreak.
+
+If the probability > 70%, the risk is classified as High.
+
+If the probability is between 40-70%, it is classified as Medium.
+
+If the probability is below 40%, it is classified as Low.
+
+📌 Note: These thresholds are based on historical outbreak patterns and may be adjusted as new data is collected.
+
+
 
 🚀 Future Improvements
 
 ✅ Improve model accuracy using hyperparameter tuning (Grid Search, Bayesian Optimization).
+
 ✅ Incorporate deep learning models (e.g., LSTMs for time-series forecasting).
+
 ✅ Develop an interactive web app using Streamlit or FastAPI.
+
 ✅ Expand the model to other crops affected by similar diseases.
+
+
 
 🤝 Contribute & Collaborate!
 
 We’d love your help! You can:
+
 🔹 Open an Issue to suggest improvements.
+
 🔹 Submit a pull request to contribute code enhancements.
+
 🔹 Share additional datasets to improve model accuracy.
+
+
 
 📜 License
 
 This project is open-source under the MIT License.
+
 📄 See the full license in the LICENSE file.
+
+
 
 📬 Contact
 
-📧 Email: jorgealonso24@gmail.com💼 LinkedIn: https://www.linkedin.com/in/jorgeluisalonso/
+📧 Email: jorgealonso24@gmail.com
 
-🚀 Let's use AI to transform potato farming in Huancavelica! 🌱
+💼 LinkedIn: Jorge Luis Alonso
+
+
+
+🚀 Let's use AI to transform potato farming in Huancavelica! 🌱📚 ReferencesThis project is based on scientific research in late blight prediction and machine learning methodology.📖 See full references in REFERENCES.md.🔧 Development Roadmap📅 Phase 1: Data Collection & Preprocessing📅 Phase 2: Model Development & Evaluation📅 Phase 3: Web-Based System Development📅 Phase 4: Deployment & Testing📅 Phase 5: Continuous Improvement🚀 Ready to make an impact? Fork, contribute, and let’s improve potato disease prediction with AI! 🥔🔥yamlCopyEdit---### 🎯 **Final Enhancements in This Version**✔ **Added sample input CSV file format** under "Using Your Own Data" ✔ **Detailed risk classification** in "Understanding the Output" ✔ **Well-structured, easy-to-follow formatting** ✔ **Everything researchers need to get started quickly** ---🚀 **
