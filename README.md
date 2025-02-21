@@ -15,7 +15,7 @@ A **Random Forest model** trained to predict late blight risk using:
 - **Farming practices**  
 
 ### 📝 Python Scripts  
-- **`predict.py`** → Runs predictions on input data and saves results to [predictions.csv](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md).  
+- **`predict.py`** → Runs predictions on input data and saves results to [predictions.csv](https://github.com/jalonso2084/Huancavelica/blob/main/predictions.csv).  
 - **`train.py`** (Optional) → Retrains the model with new data.  
 
 ### 📊 Sample Data  
