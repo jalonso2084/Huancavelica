@@ -15,13 +15,13 @@ A **Random Forest model** trained to predict late blight risk using:
 - **Farming practices**  
 
 ### 📝 Python Scripts  
-- **`predict.py`** → Runs predictions on input data and saves results to `predictions.csv`.  
+- **`predict.py`** → Runs predictions on input data and saves results to [predictions.csv](https://github.com/jalonso2084/Huancavelica/blob/main/predictions.csv).  
 
 ### 📊 Sample Data  
 Example weather and soil data in **CSV format** for easy testing.  
 
 ### 🔗 References  
-A list of scientific papers used for model training and evaluation (See `REFERENCES.md`).  
+A list of scientific papers used for model training and evaluation (See [REFERENCES.md](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md)).  
 
 ---
 
@@ -29,7 +29,7 @@ A list of scientific papers used for model training and evaluation (See `REFEREN
 
 Below is a **diagram** illustrating the model's workflow, showing how weather, soil, and farming data are processed to generate late blight risk predictions:
 
-![Workflow Diagram](Imagen_definitiva.png)  
+![Workflow Diagram](https://github.com/jalonso2084/Huancavelica/blob/main/definitiva.jpg)  
 
 ---
 
