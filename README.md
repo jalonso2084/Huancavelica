@@ -158,7 +158,7 @@ While this README is already very helpful, here are a few enhancements:
 
 We’d love your help improving this project:  
 
-💡 Report issues & suggest improvements in [GitHub Issues](https://github.com/jalons2084/Huancavelica/issues)  
+💡 Report issues & suggest improvements in [GitHub Issues](https://github.com/jalonso2084/Huancavelica/issues)  
 💪 Submit a **pull request** to contribute code enhancements  
 📒 Share additional datasets to improve model accuracy  
 
