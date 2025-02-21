@@ -65,13 +65,17 @@ pip install -r requirements.txt
 
 ---
 
+---
+
 ## 📊 Running Predictions  
 
 ### 3️⃣ Run Predictions on Sample Data  
 ```bash
 python scripts/predict.py --input sample_data/weather_sample.csv
 ```
-The results will be saved in `predictions.csv`.
+The results will be saved in `predictions.csv`.  
+
+[Run the Prediction Script](https://github.com/jalonso2084/Huancavelica/blob/main/scripts/predict.py)
 
 ### 4️⃣ Check the Output  
 Open `predictions.csv` to review the model's predictions and compare them to the input data.  
