@@ -35,11 +35,41 @@ Below is a **diagram** illustrating the model's workflow, showing how weather, s
 
 ## 🏁 Get Started in 5 Minutes!  
 
-### 1️⃣ Clone This Repository  
+### **Option 1: Beginner-Friendly (Download ZIP)**  
+If you are **not familiar with GitHub**, follow these simple steps:  
+
+1. **Download the repository manually:**  
+   - Go to [Huancavelica GitHub Repository](https://github.com/jalons2084/Huancavelica)
+   - Click the **"Code"** button (green button at the top).
+   - Select **"Download ZIP"**.
+   - Extract the downloaded ZIP file to a folder on your computer.
+
+2. **Open a terminal (or Command Prompt) and navigate to the folder:**  
+   - **Windows:** Open **Command Prompt** and type:  
+     ```bash
+     cd path\to\Huancavelica
+     ```
+   - **Mac/Linux:** Open **Terminal** and type:  
+     ```bash
+     cd path/to/Huancavelica
+     ```
+   *(Replace `path/to/` with the actual location where you extracted the ZIP file.)*
+
+3. Continue with **Setting Up Python & Installing Requirements** (next section).  
+
+---
+
+### **Option 2: Using Git (For Advanced Users)**  
+If you are **comfortable with Git**, you can clone the repository:  
+
 ```bash
 git clone https://github.com/jalons2084/Huancavelica.git  
 cd Huancavelica
 ```
+
+Then you can continue with **Setting Up Python & Installing Requirements** below.
+
+---
 
 ### 2️⃣ Set Up Python & Install Requirements  
 
@@ -56,11 +86,8 @@ pip install -r requirements.txt
 conda create --name blight-prediction python=3.9  
 conda activate blight-prediction  
 pip install -r requirements.txt
+
 ```
-
----
-
----
 
 ## 📊 Running Predictions  
 
