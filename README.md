@@ -15,14 +15,14 @@ A **Random Forest model** trained to predict late blight risk using:
 - **Farming practices**  
 
 ### 📝 Python Scripts  
-- **`predict.py`** → Runs predictions on input data and saves results to `predictions.csv`.  
+- **`predict.py`** → Runs predictions on input data and saves results to [predictions.csv](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md).  
 - **`train.py`** (Optional) → Retrains the model with new data.  
 
 ### 📊 Sample Data  
 Example weather and soil data in **CSV format** for easy testing.  
 
 ### 🔗 References  
-A list of scientific papers used for model training and evaluation (See `REFERENCES.md`).  
+A list of scientific papers used for model training and evaluation (See [REFERENCES.md](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md)).  
 
 ---
 
@@ -124,7 +124,7 @@ While this README is already very helpful, here are a few enhancements:
 
 💪 **Visuals**: Added a **workflow diagram** for clarity.  
 📚 **Data Dictionary**: Included a **table describing sample data variables**.  
-📍 **Direct Notebook Links**: You can explore them **[here](notebooks/)**.  
+📍 **Direct Script Link**: You can explore it **[here](https://github.com/jalonso2084/Huancavelica/blob/main/scripts/predict.py)**.  
 
 ---
 
@@ -148,7 +148,7 @@ This project is **open-source** under the **MIT License**. See the full license 
 
 ## 📞 Contact  
 
-📧 **Email**: jorgealons204@gmail.com  
+📧 **Email**: jorgealons24@gmail.com  
 👉 **LinkedIn**: [Jorge Luis Alonso](https://www.linkedin.com/in/jalons2084)  
 
 🌍 **Let's Use AI to Transform Potato Farming in Huancavelica! 🚀**
