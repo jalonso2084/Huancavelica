@@ -162,7 +162,7 @@ We’d love your help improving this project:
 💪 Submit a **pull request** to contribute code enhancements  
 📒 Share additional datasets to improve model accuracy  
 
-See the full guidelines in **`CONTRIBUTING.md`**.  
+See the full guidelines in **[CONTRIBUTING.md](https://github.com/jalonso2084/Huancavelica/blob/main/CONTRIBUTING.md)**.  
 
 ---
 
