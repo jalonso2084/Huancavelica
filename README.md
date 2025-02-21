@@ -175,7 +175,7 @@ This project is **open-source** under the **MIT License**. See the full license 
 ## 📞 Contact  
 
 📧 **Email**: jorgealonso24@gmail.com  
-👉 **LinkedIn**: [Jorge Luis Alonso](https://www.linkedin.com/in/jalons2084)  
+👉 **LinkedIn**: [Jorge Luis Alonso](https://www.linkedin.com/in/jorgeluisalonso/)  
 
 🌍 **Let's Use AI to Transform Potato Farming in Huancavelica! 🚀**
 
