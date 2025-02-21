@@ -39,10 +39,10 @@ Below is a **diagram** illustrating the model's workflow, showing how weather, s
 If you are **not familiar with GitHub**, follow these simple steps:  
 
 1. **Download the repository manually:**  
-   - Go to [Huancavelica GitHub Repository](https://github.com/jalons2084/Huancavelica)
+   - Go to [Huancavelica GitHub Repository](https://github.com/jalonso2084/Huancavelica)
    - Click the **"Code"** button (green button at the top).
    - Select **"Download ZIP"**.
-   - Extract the downloaded ZIP file to a folder on your computer.
+   - Extract the downloaded ZIP file and put it in a folder on your computer.
 
 2. **Open a terminal (or Command Prompt) and navigate to the folder:**  
    - **Windows:** Open **Command Prompt** and type:  
@@ -67,7 +67,7 @@ git clone https://github.com/jalons2084/Huancavelica.git
 cd Huancavelica
 ```
 
-Then continue with **Setting Up Python & Installing Requirements** below.
+Then you can continue with **Setting Up Python & Installing Requirements** below.
 
 ---
 
@@ -120,7 +120,7 @@ Example Model Output:
 | -13.1631 | -72.5450 | Medium        |
 
 ### 📌 Risk Level Interpretation  
-- **High Risk**: Immediate intervention recommended (e.g., apply fungicide within 3 days).  
+- **High Risk**: Immediate intervention is recommended (e.g., applying fungicide within 3 days).  
 - **Medium Risk**: Consider preventive measures (e.g., adjusting irrigation, fungicides).  
 - **Low Risk**: No immediate action required.  
 
