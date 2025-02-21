@@ -39,7 +39,7 @@ Below is a **diagram** illustrating the model's workflow, showing how weather, s
 If you are **not familiar with GitHub**, follow these simple steps:  
 
 1. **Download the repository manually:**  
-   - Go to [Huancavelica GitHub Repository](https://github.com/jalons2084/Huancavelica)
+   - Go to [Huancavelica GitHub Repository](https://github.com/jalonso2084/Huancavelica)
    - Click the **"Code"** button (green button at the top).
    - Select **"Download ZIP"**.
    - Extract the downloaded ZIP file to a folder on your computer.
