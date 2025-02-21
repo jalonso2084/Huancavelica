@@ -21,10 +21,6 @@ A **Random Forest model** trained to predict late blight risk using:
 ### 📊 Sample Data  
 Example weather and soil data in **CSV format** for easy testing.  
 
-### 🐓 Jupyter Notebooks  
-Notebooks for **data exploration, model training, and feature importance analysis**.  
-👉 **[View the Notebooks](notebooks/)**  
-
 ### 🔗 References  
 A list of scientific papers used for model training and evaluation (See `REFERENCES.md`).  
 
