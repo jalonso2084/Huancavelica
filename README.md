@@ -31,6 +31,8 @@ Below is a **diagram** illustrating the model's workflow, showing how weather, s
 
 ![Workflow Diagram](https://github.com/jalonso2084/Huancavelica/blob/main/definitiva.jpg)  
 
+*The diagram shows how weather, soil, and farming data are processed to generate late blight risk predictions.*
+
 ---
 
 ## 🏁 Get Started in 5 Minutes!  
