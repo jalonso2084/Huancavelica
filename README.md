@@ -29,7 +29,7 @@ A list of scientific papers used for model training and evaluation (See [REFEREN
 
 Below is a **diagram** illustrating the model's workflow, showing how weather, soil, and farming data are processed to generate late blight risk predictions:
 
-![Alt text](https://github.com/jalonso2084/Huancavelica/blob/main/Imagendefinitiva1.jpg)  ```
+![Alt text](https://github.com/jalonso2084/Huancavelica/blob/main/definitiva.jpg)  ```
 
 ---
 
