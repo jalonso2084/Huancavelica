@@ -142,13 +142,13 @@ See the full guidelines in **`CONTRIBUTING.md`**.
 
 ## 💜 License  
 
-This project is **open-source** under the **MIT License**. See the full license in `LICENSE`.  
+This project is **open-source** under the **MIT License**. See the full license [here](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md). 
 
 ---
 
 ## 📞 Contact  
 
-📧 **Email**: jorgealons24@gmail.com  
+📧 **Email**: jorgealonso24@gmail.com  
 👉 **LinkedIn**: [Jorge Luis Alonso](https://www.linkedin.com/in/jalons2084)  
 
 🌍 **Let's Use AI to Transform Potato Farming in Huancavelica! 🚀**
