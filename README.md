@@ -15,13 +15,13 @@ A **Random Forest model** trained to predict late blight risk using:
 - **Farming practices**  
 
 ### 📝 Python Scripts  
-- **`predict.py`** → Runs predictions on input data and saves results to [predictions.csv](https://github.com/jalonso2084/Huancavelica/blob/main/predictions.csv).  
+- **`predict.py`** → Runs predictions on input data and saves results to `predictions.csv`.  
 
 ### 📊 Sample Data  
 Example weather and soil data in **CSV format** for easy testing.  
 
 ### 🔗 References  
-A list of scientific papers used for model training and evaluation (See [REFERENCES.md](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md)).  
+A list of scientific papers used for model training and evaluation (See `REFERENCES.md`).  
 
 ---
 
@@ -29,7 +29,7 @@ A list of scientific papers used for model training and evaluation (See [REFEREN
 
 Below is a **diagram** illustrating the model's workflow, showing how weather, soil, and farming data are processed to generate late blight risk predictions:
 
-![Alt text](https://github.com/jalonso2084/Huancavelica/blob/main/definitiva.jpg)  ```
+![Workflow Diagram](Imagen_definitiva.png)  
 
 ---
 
@@ -39,7 +39,7 @@ Below is a **diagram** illustrating the model's workflow, showing how weather, s
 If you are **not familiar with GitHub**, follow these simple steps:  
 
 1. **Download the repository manually:**  
-   - Go to [Huancavelica GitHub Repository](https://github.com/jalonso2084/Huancavelica)
+   - Go to [Huancavelica GitHub Repository](https://github.com/jalons2084/Huancavelica)
    - Click the **"Code"** button (green button at the top).
    - Select **"Download ZIP"**.
    - Extract the downloaded ZIP file to a folder on your computer.
@@ -67,7 +67,7 @@ git clone https://github.com/jalons2084/Huancavelica.git
 cd Huancavelica
 ```
 
-Then you can continue with **Setting Up Python & Installing Requirements** below.
+Then continue with **Setting Up Python & Installing Requirements** below.
 
 ---
 
@@ -86,8 +86,9 @@ pip install -r requirements.txt
 conda create --name blight-prediction python=3.9  
 conda activate blight-prediction  
 pip install -r requirements.txt
-
 ```
+
+---
 
 ## 📊 Running Predictions  
 
@@ -98,6 +99,15 @@ python scripts/predict.py --input sample_data/weather_sample.csv
 The results will be saved in `predictions.csv`.  
 
 [Run the Prediction Script](https://github.com/jalonso2084/Huancavelica/blob/main/scripts/predict.py)
+
+### **Example Input Data**
+Your input file should follow this format (`weather_sample.csv`):
+
+```csv
+latitude,longitude,temperature,humidity,precipitation,soil_pH,organic_carbon,soil_texture,farming_practices
+-12.043,-77.0283,18.5,85,12,5.8,2.1,loamy,traditional
+-13.1631,-72.545,20.1,80,10,6.1,1.8,sandy,organic
+```
 
 ### 4️⃣ Check the Output  
 Open `predictions.csv` to review the model's predictions and compare them to the input data.  
@@ -113,16 +123,6 @@ Example Model Output:
 - **High Risk**: Immediate intervention recommended (e.g., apply fungicide within 3 days).  
 - **Medium Risk**: Consider preventive measures (e.g., adjusting irrigation, fungicides).  
 - **Low Risk**: No immediate action required.  
-
----
-
-## 🌇 Repository Structure  
-
-👤 `scripts/` → Python scripts for running predictions & training models  
-📂 `sample_data/` → Example weather & soil data in CSV format  
-📂 `models/` → Trained model files (if applicable)  
-📂 `notebooks/` → Jupyter notebooks for data analysis & model training  
-📂 `docs/` → Additional documentation  
 
 ---
 
