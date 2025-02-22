@@ -1,7 +1,11 @@
+import sys
+import os
 import argparse
 import pandas as pd
 import pickle
-import os
+
+# Force UTF-8 encoding to avoid UnicodeEncodeError in Windows CI/CD
+sys.stdout.reconfigure(encoding='utf-8')
 
 print("🚀 Running predict.py... This line should ALWAYS appear!")
 
