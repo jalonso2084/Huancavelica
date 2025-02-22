@@ -82,6 +82,10 @@ source venv/bin/activate  # macOS/Linux
 venv\Scripts\activate  # Windows  
 pip install -r requirements.txt
 ```
+The `requirements.txt` file includes necessary dependencies like:
+- `pandas` (for data handling)
+- `scikit-learn` (for the Random Forest model)
+- `numpy` (for numerical operations)
 
 #### Using `conda`  
 ```bash
