@@ -96,15 +96,19 @@ pip install -r requirements.txt
 
 ---
 
-## 📊 Running Predictions  
+## 📊 Running Predictions and Automatic Validation  
 
-### 3️⃣ Run Predictions on Sample Data  
+### 3⃣ Run Predictions and Verify Results  
 ```bash
-python scripts/predict.py --input sample_data/weather_sample.csv
+python scripts/predict.py --input processed_data/final_merged_dataset.csv
 ```
-The results will be saved in `predictions.csv`.  
+👉 This command will:
+- Load the model and make predictions.
+- **Automatically validate predictions** (check missing values, prediction distribution).
+- **If actual disease labels exist, calculate accuracy**.
+- Save results to `predictions.csv`.
 
-[Run the Prediction Script](https://github.com/jalonso2084/Huancavelica/blob/main/scripts/predict.py)
+You will see a **summary of the predictions and validation results** directly in the terminal.
 
 ### **Example Input Data**
 Your input file should follow this format (`weather_sample.csv`):
