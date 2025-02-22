@@ -76,6 +76,22 @@ Then you can continue with **Setting Up Python & Installing Requirements** below
 
 ### 2️⃣ Set Up Python & Install Requirements  
 
+#### **Fixing Virtual Environment Issues on Windows**  
+Some users may experience errors activating the virtual environment due to **PowerShell Execution Policy restrictions**. If you see:
+
+```powershell
+venv\Scripts\Activate : File G:\My Drive\Huancavelica\venv\Scripts\Activate.ps1 cannot be loaded because running scripts is disabled.
+```
+Fix it by running PowerShell as **Administrator** and entering:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted
+```
+Then activate the environment:
+```powershell
+venv\Scripts\Activate
+```
+
 #### Using `venv` (Recommended)  
 ```bash
 python3 -m venv venv  
@@ -83,10 +99,6 @@ source venv/bin/activate  # macOS/Linux
 venv\Scripts\activate  # Windows  
 pip install -r requirements.txt
 ```
-The `requirements.txt` file includes necessary dependencies like:
-- `pandas` (for data handling)
-- `scikit-learn` (for the Random Forest model)
-- `numpy` (for numerical operations)
 
 #### Using `conda`  
 ```bash
@@ -95,29 +107,31 @@ conda activate blight-prediction
 pip install -r requirements.txt
 ```
 
+
 ---
 
 ## 📊 Running Predictions and Automatic Validation  
 
-### 3⃣ Run Predictions and Verify Results  
+### 3️⃣ Run Predictions and Verify Results  
 ```bash
 python scripts/predict.py --input processed_data/final_merged_dataset.csv
 ```
-👉 This command will:
-- Load the model and make predictions.
-- **Automatically validate predictions** (check missing values, prediction distribution).
-- **If actual disease labels exist, calculate accuracy**.
-- Save results to `predictions.csv`.
 
-You will see a **summary of the predictions and validation results** directly in the terminal.
+### **👉 Manual Import Test (Before Running Pytest)**  
+If you face issues with `ModuleNotFoundError`, check if Python can import `predict.py` manually:
 
-### **Example Input Data**
-Your input file should follow this format (`weather_sample.csv`):
+```powershell
+python -c "from scripts.predict import predict; print('✅ Import successful!')"
+```
 
-```csv
-latitude,longitude,temperature,humidity,precipitation,soil_pH,organic_carbon,soil_texture,farming_practices
--12.043,-77.0283,18.5,85,12,5.8,2.1,loamy,traditional
--13.1631,-72.545,20.1,80,10,6.1,1.8,sandy,organic
+If the import works, pytest should run fine.
+
+### **👉 Run Pytest with `PYTHONPATH` (Fix Import Issues)**  
+If pytest fails to find `scripts.predict`, run:
+
+```powershell
+$env:PYTHONPATH = "G:\My Drive\Huancavelica"
+pytest tests/
 ```
 
 ### 4️⃣ Check the Output  
