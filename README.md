@@ -65,7 +65,7 @@ If you are **not familiar with GitHub**, follow these simple steps:
 If you are **comfortable with Git**, you can clone the repository:  
 
 ```bash
-git clone https://github.com/jalons2084/Huancavelica.git  
+git clone https://github.com/jalonso2084/Huancavelica.git  
 cd Huancavelica
 ```
 
