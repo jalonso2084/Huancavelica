@@ -1,6 +1,18 @@
+import sys
+import os
+
+# Ensure Python can find the scripts directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Attempt to import predict function, with an error message if it fails
+try:
+    from scripts.predict import predict
+except ModuleNotFoundError as e:
+    print(f"❌ ImportError: {e}")
+    raise
+
 import pytest
 import pandas as pd
-from scripts.predict import predict
 
 def test_predict_sample_data(tmp_path):
     """Test predict.py with a sample input CSV"""
@@ -19,11 +31,11 @@ def test_predict_sample_data(tmp_path):
     # Run prediction
     try:
         predict(str(input_file), str(output_file))
-        assert output_file.exists(), "Prediction output file was not created!"
+        assert output_file.exists(), "❌ Prediction output file was not created!"
         
         # Load predictions
         df = pd.read_csv(output_file)
-        assert "Predicted_Disease_Risk" in df.columns, "Predictions column missing!"
-        assert len(df) == 2, "Prediction output has incorrect number of rows!"
+        assert "Predicted_Disease_Risk" in df.columns, "❌ Predictions column missing!"
+        assert len(df) == 2, "❌ Prediction output has incorrect number of rows!"
     except Exception as e:
-        pytest.fail(f"Prediction test failed: {e}")
+        pytest.fail(f"❌ Prediction test failed: {e}")
