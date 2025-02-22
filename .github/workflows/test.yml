@@ -63,6 +63,9 @@ jobs:
       - name: 🔍 Debug - Check Directory Structure (Windows)
         run: Get-ChildItem -Recurse
 
+      - name: 🛠 Set UTF-8 Encoding (Windows)  # Moved this step to the correct position
+        run: chcp 65001
+
       - name: 🛠 Set PYTHONPATH (Windows)
         run: |
           echo "PYTHONPATH=$env:GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
