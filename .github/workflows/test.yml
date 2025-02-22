@@ -10,7 +10,7 @@ on:
 
 jobs:
   test-linux:
-    runs-on: ubuntu-latest  # Linux runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: 🛠 Checkout Repository
@@ -24,19 +24,23 @@ jobs:
       - name: 📦 Install Dependencies (Linux)
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt  # Excludes pywinpty on Linux
+          pip install -r requirements.txt
 
-      - name: 🔍 Debug - Check Python Path
-        run: python -c "import sys; print(sys.path)"
+      - name: 🔍 Debug - Check Directory Structure
+        run: ls -R  # 📌 This step prints all files and directories
 
       - name: 🛠 Set PYTHONPATH
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+        run: |
+          echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          export PYTHONPATH=$GITHUB_WORKSPACE
 
       - name: ✅ Run Tests
-        run: pytest
+        run: |
+          cd D:\a\Huancavelica\Huancavelica
+          pytest
 
   test-windows:
-    runs-on: windows-latest  # Windows runner
+    runs-on: windows-latest
 
     steps:
       - name: 🛠 Checkout Repository
@@ -51,13 +55,17 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -r requirements-windows.txt  # Installs pywinpty ONLY on Windows
+          pip install -r requirements-windows.txt  # Windows-specific dependencies
 
-      - name: 🔍 Debug - Check Python Path
-        run: python -c "import sys; print(sys.path)"
+      - name: 🔍 Debug - Check Directory Structure
+        run: Get-ChildItem -Recurse  # 📌 This is the Windows equivalent of `ls -R`
 
       - name: 🛠 Set PYTHONPATH
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+        run: |
+          echo "PYTHONPATH=$GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          $env:PYTHONPATH = $GITHUB_WORKSPACE
 
       - name: ✅ Run Tests
-        run: pytest
+        run: |
+          cd D:\a\Huancavelica\Huancavelica
+          pytest
