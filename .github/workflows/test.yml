@@ -27,16 +27,19 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🔍 Debug - Check Directory Structure
-        run: ls -R  # 📌 This step prints all files and directories
+        run: ls -R  # Prints all files
 
       - name: 🛠 Set PYTHONPATH
         run: |
-          echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
-          export PYTHONPATH=$GITHUB_WORKSPACE
+          echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+          export PYTHONPATH=$(pwd)
+
+      - name: 🔍 Test Python Import
+        run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
 
       - name: ✅ Run Tests
         run: |
-          cd D:\a\Huancavelica\Huancavelica
+          cd $GITHUB_WORKSPACE
           pytest
 
   test-windows:
@@ -57,15 +60,18 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-windows.txt  # Windows-specific dependencies
 
-      - name: 🔍 Debug - Check Directory Structure
-        run: Get-ChildItem -Recurse  # 📌 This is the Windows equivalent of `ls -R`
+      - name: 🔍 Debug - Check Directory Structure (Windows)
+        run: Get-ChildItem -Recurse
 
-      - name: 🛠 Set PYTHONPATH
+      - name: 🛠 Set PYTHONPATH (Windows)
         run: |
-          echo "PYTHONPATH=$GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
-          $env:PYTHONPATH = $GITHUB_WORKSPACE
+          echo "PYTHONPATH=$env:GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          $env:PYTHONPATH=$env:GITHUB_WORKSPACE
 
-      - name: ✅ Run Tests
+      - name: 🔍 Test Python Import
+        run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
+
+      - name: ✅ Run Tests (Windows)
         run: |
-          cd D:\a\Huancavelica\Huancavelica
+          cd $env:GITHUB_WORKSPACE
           pytest
