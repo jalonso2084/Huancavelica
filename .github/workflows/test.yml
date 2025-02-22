@@ -26,6 +26,12 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt  # Excludes pywinpty on Linux
 
+      - name: 🔍 Debug - Check Python Path
+        run: python -c "import sys; print(sys.path)"
+
+      - name: 🛠 Set PYTHONPATH
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
       - name: ✅ Run Tests
         run: pytest
 
@@ -46,6 +52,12 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r requirements-windows.txt  # Installs pywinpty ONLY on Windows
+
+      - name: 🔍 Debug - Check Python Path
+        run: python -c "import sys; print(sys.path)"
+
+      - name: 🛠 Set PYTHONPATH
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
       - name: ✅ Run Tests
         run: pytest
