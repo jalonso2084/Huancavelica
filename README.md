@@ -193,7 +193,7 @@ See the full guidelines in **[CONTRIBUTING.md](https://github.com/jalonso2084/Hu
 
 ## 💜 License  
 
-This project is **open-source** under the **MIT License**. See the full license [here](https://github.com/jalonso2084/Huancavelica/blob/main/REFERENCES.md). 
+This project is **open-source** under the **MIT License**. See the full license [here](https://github.com/jalonso2084/Huancavelica/blob/main/LICENSE.txt). 
 
 ---
 
