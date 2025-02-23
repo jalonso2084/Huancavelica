@@ -133,6 +133,14 @@ If pytest fails to find `scripts.predict`, run:
 $env:PYTHONPATH = "G:\My Drive\Huancavelica"
 pytest tests/
 ```
+### **Example Input Data**
+Your input file should follow this format (`weather_sample.csv`):
+
+```csv
+latitude,longitude,temperature,humidity,precipitation,soil_pH,organic_carbon,soil_texture,farming_practices
+-12.043,-77.0283,18.5,85,12,5.8,2.1,loamy,traditional
+-13.1631,-72.545,20.1,80,10,6.1,1.8,sandy,organic
+```
 
 ### 4️⃣ Check the Output  
 Open `predictions.csv` to review the model's predictions and compare them to the input data.  
