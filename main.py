@@ -1,10 +1,13 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/", include_in_schema=False)
-@app.head("/")
-async def read_root():
+@app.get("/")
+async def root():
     return {"message": "FastAPI is running!"}
 
-
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT not set
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
