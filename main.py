@@ -9,12 +9,9 @@ async def root():
     return {"message": "FastAPI is running!"}
 
 if __name__ == "__main__":
-    # Explicitly log the PORT variable for debugging
-    port = os.getenv("PORT")
-    if port is None:
-        print("⚠️ PORT environment variable is not set! Defaulting to 8000.")
-        port = 8000
-    else:
-        print(f"✅ Using PORT={port} from environment.")
+    # Retrieve the PORT from Render's environment, default to 8000 if not set
+    port = int(os.environ.get("PORT", 8000))
 
-    uvicorn.run("main:app", host="0.0.0.0", port=int(port))
+    print(f"✅ Starting FastAPI on PORT {port}")  # Debugging message
+
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
