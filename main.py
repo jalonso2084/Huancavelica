@@ -10,8 +10,14 @@ async def root():
 
 if __name__ == "__main__":
     # Retrieve the PORT from Render's environment, default to 8000 if not set
-    port = int(os.environ.get("PORT", 8000))
+    port = os.environ.get("PORT", "NOT SET")
 
-    print(f"✅ Starting FastAPI on PORT {port}")  # Debugging message
+    print(f"✅ DEBUG: PORT from Render is: {port}")  # Debugging message
+
+    if port == "NOT SET":
+        print("⚠️ ERROR: PORT environment variable is missing! Using default port 8000.")
+        port = 8000
+    else:
+        port = int(port)
 
     uvicorn.run("main:app", host="0.0.0.0", port=port)
