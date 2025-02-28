@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -30,6 +31,10 @@ def adjust_prediction(base_risk, variety):
     resistance_level = variety_resistance.get(variety, 1)  # Default to moderate
     adjusted_risk = base_risk * (1 - (resistance_level * 0.2))  # Reduce risk by 20% per resistance level
     return max(0, min(adjusted_risk, 1))  # Keep within [0,1] range
+
+@app.get("/", include_in_schema=False)
+async def redirect_to_docs():
+    return RedirectResponse(url="/docs")
 
 @app.post("/predict")
 async def predict_risk(input_data: PredictionInput):
