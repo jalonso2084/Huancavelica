@@ -3,55 +3,61 @@
 # ======================================
 numpy>=2.2.3  # Numerical computing
 pandas>=2.2.3  # Data manipulation
-scipy>=1.15.2 # Scientific computing
+scipy>=1.15.2  # Scientific computing
 
 # ======================================
 # ✅ Machine Learning Libraries
 # ======================================
-scikit-learn>=1.6.1 # ML algorithms & preprocessing
-xgboost>=2.1.4 # Gradient boosting for ML models
+scikit-learn>=1.6.1  # ML algorithms & preprocessing
+xgboost>=2.1.4  # Gradient boosting for ML models
 
 # ======================================
 # 🔹 Visualization
 # ======================================
-matplotlib>=3.10.0 # Plotting library
-seaborn>=0.12.2 # Statistical data visualization
+matplotlib>=3.10.0  # Plotting library
+seaborn>=0.12.2  # Statistical data visualization
+plotly>=5.0.0  # Interactive plots & graphs (added to fix the error)
 
 # ======================================
 # 🔹 Web & API Handling
 # ======================================
-httpx>=0.28.1 # Modern HTTP client (async support)
-requests>=2.32.3 # HTTP requests
-urllib3>=2.3.0 # Core networking for requests
-websocket-client>=1.8.0 # For real-time communication (if applicable)
+httpx>=0.28.1  # Modern HTTP client (async support)
+requests>=2.32.3  # HTTP requests
+urllib3>=2.3.0  # Core networking for requests
+websocket-client>=1.8.0  # For real-time communication (if applicable)
 
 # ======================================
 # 🔹 Notebook & Jupyter Support
 # ======================================
-ipykernel>=6.29.5 # Kernel for Jupyter
-ipywidgets>=8.1.5 # Interactive widgets for notebooks
-jupyter>=1.1.1 # Jupyter Notebook tools
-matplotlib-inline>=0.1.7 # Ensures proper plotting in Jupyter
-notebook>=7.3.2 # Jupyter Notebook interface
+ipykernel>=6.29.5  # Kernel for Jupyter
+ipywidgets>=8.1.5  # Interactive widgets for notebooks
+jupyter>=1.1.1  # Jupyter Notebook tools
+matplotlib-inline>=0.1.7  # Ensures proper plotting in Jupyter
+notebook>=7.3.2  # Jupyter Notebook interface
 
 # ======================================
 # 🔹 Testing & Development Tools
 # ======================================
-pytest>=8.3.4 # Unit testing framework
+pytest>=8.3.4  # Unit testing framework
 
 # ======================================
 # 🔹 Utility & Support Libraries
 # ======================================
-debugpy>=1.8.12 # Debugger for Python (used in Jupyter)
-jsonschema>=4.23.0 # JSON validation
-prometheus_client>=0.21.1 # Metrics collection & monitoring
-python-dateutil>=2.9.0.post0 # Date/time utilities
-pyyaml>=6.0.2 # YAML file parsing
-tornado>=6.4.2 # Async networking framework (used by Jupyter)
-traitlets>=5.14.3 # Configuration system for Python apps
+debugpy>=1.8.12  # Debugger for Python (used in Jupyter)
+jsonschema>=4.23.0  # JSON validation
+prometheus_client>=0.21.1  # Metrics collection & monitoring
+python-dateutil>=2.9.0.post0  # Date/time utilities
+pyyaml>=6.0.2  # YAML file parsing
+tornado>=6.4.2  # Async networking framework (used by Jupyter)
+traitlets>=5.14.3  # Configuration system for Python apps
 
 # ======================================
 # ✅ FastAPI & Web Server
 # ======================================
-fastapi[standard] # API framework
-uvicorn>=0.28.0 # ASGI server for FastAPI
+fastapi[standard]  # API framework
+uvicorn>=0.28.0  # ASGI server for FastAPI
+
+# ======================================
+# ✅ Streamlit for Web UI
+# ======================================
+streamlit>=1.30.0  # Web app framework

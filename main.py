@@ -1,45 +1,75 @@
-from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
-from pydantic import BaseModel
+import streamlit as st
+import requests
 
-app = FastAPI()
+# Set the title
+st.set_page_config(page_title="AI-Powered Late Blight Prediction System")
 
-# Define potato variety resistance levels
-variety_resistance = {
-    "INIA-303 Canchan": 0,   # Highly susceptible
-    "INIA-302 Amarilis": 1,  # Moderately resistant
-    "Yungay": 0,             # Susceptible (Control)
-    "INIA-321 Kawsay": 2,    # Highly resistant
-    "CIP308488.92": 2,       
-    "CIP308495.227": 2,      
-    "CIP308478.59": 2,       
-    "CIP308486.355": 2,      
-    "CIP308487.157": 2,      
-    "CIP308433.101": 2,      
-    "CIP308436.84": 2,       
-    "CIP308502.95": 2       
-}
+st.markdown(
+    "<h1 style='text-align: center;'>🌱 AI-Powered Late Blight Prediction System</h1>", 
+    unsafe_allow_html=True
+)
 
-class PredictionInput(BaseModel):
-    humidity: float
-    weather: str
-    soil: str
-    variety: str
+st.write("### Enter Environmental Conditions")
 
-def adjust_prediction(base_risk, variety):
-    """ Adjusts the blight risk based on variety resistance. """
-    resistance_level = variety_resistance.get(variety, 1)  # Default to moderate
-    adjusted_risk = base_risk * (1 - (resistance_level * 0.2))  # Reduce risk by 20% per resistance level
-    return max(0, min(adjusted_risk, 1))  # Keep within [0,1] range
+# Dropdown for weather condition
+weather = st.selectbox(
+    "Weather Condition", 
+    ["Sunny", "Cloudy", "Rainy"]
+)
 
-@app.get("/", include_in_schema=False)
-async def redirect_to_docs():
-    return RedirectResponse(url="/docs")
+# Slider for humidity percentage
+humidity = st.slider("Humidity (%)", min_value=10, max_value=100, value=50)
 
-@app.post("/predict")
-async def predict_risk(input_data: PredictionInput):
-    """ Predicts late blight risk based on input conditions. """
-    base_risk = 0.8 if input_data.humidity > 70 else 0.5  # Simple rule-based model
-    adjusted_risk = adjust_prediction(base_risk, input_data.variety)
+# Dropdown for soil type
+soil_type = st.selectbox(
+    "Soil Type", 
+    ["Sandy", "Loamy", "Clay"]
+)
 
-    return {"variety": input_data.variety, "predicted_risk": round(adjusted_risk * 100, 2)}
+# Dropdown for potato variety
+potato_variety = st.selectbox(
+    "Potato Variety",
+    [
+        "INIA-303 Canchan",
+        "INIA-302 Amarilis",
+        "Yungay",
+        "INIA-321 Kawsay",
+        "CIP308488.92",
+        "CIP308495.227",
+        "CIP308478.59",
+        "CIP308486.355",
+        "CIP308487.157",
+        "CIP308433.101",
+        "CIP308436.84",
+        "CIP308502.95"
+    ]
+)
+
+# Button to submit input and get prediction
+if st.button("Predict Blight Risk"):
+    # Prepare input data
+    data = {
+        "humidity": str(humidity),
+        "weather": weather,
+        "soil": soil_type,
+        "variety": potato_variety
+    }
+
+    # API URL - Update this with your Render backend URL
+    api_url = "https://huancavelica.onrender.com/predict"
+
+    try:
+        response = requests.post(api_url, json=data)
+        result = response.json()
+        
+        if "predicted_risk" in result:
+            st.success(f"🌿 Predicted Late Blight Risk: {result['predicted_risk']}")
+        else:
+            st.error("⚠️ Unexpected response from the server.")
+
+    except Exception as e:
+        st.error(f"Error connecting to API: {e}")
+
+# Footer
+st.markdown("---")
+st.markdown("🌍 Developed for **Huancavelica Potato Farmers** | 🔬 AI-Powered Agricultural Research")
