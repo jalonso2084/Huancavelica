@@ -46,10 +46,10 @@ if st.button("Predict Blight Risk"):
             st.markdown(f"<h3 style='text-align: center;'>🔎 PPI Validation: {validation['reliability']}</h3>", unsafe_allow_html=True)
 
             # ✅ Show AI Explanation
-            st.info(f"🧠 **AI Explanation:** {gpt_explanation}")
+            st.info(f"💡 **AI Explanation:** {gpt_explanation}")
 
             # ✅ Show Recommendation
-            st.success(f"🌍 **Recommended Action:** {recommendation}")
+            st.success(f"✅ **Recommended Action:** {recommendation}")
 
         else:
             st.error("⚠️ Unexpected response from the server.")
@@ -57,6 +57,6 @@ if st.button("Predict Blight Risk"):
     except Exception as e:
         st.error(f"Error connecting to API: {e}")
 
-# ✅ Footer
+# ✅ Updated Footer with Your Name
 st.markdown("---")
-st.markdown("🌍 Developed for **Huancavelica Potato Farmers** | 🔬 AI-Powered Agricultural Research")
+st.markdown("🚀 Developed for **Jorge Luis Alonso** | **AI-Driven Agricultural Data Specialist**")
