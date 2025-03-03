@@ -10,6 +10,11 @@ app = FastAPI()
 # ✅ Load OpenAI API Key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# ✅ Root Route (Fixes the 404 Error)
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI is running!"}
+
 # ✅ Define request model
 class PredictionInput(BaseModel):
     humidity: int
@@ -19,9 +24,6 @@ class PredictionInput(BaseModel):
 
 # ✅ Function to calculate PPI validation metrics
 def compute_ppi_validation(predicted_risk):
-    """
-    Simulates PPI framework validation using statistical parameters.
-    """
     ppi_correlation = round(random.uniform(0.3, 0.9), 2)
     p_value = round(random.uniform(0.05, 0.9), 4)
     confidence_score = round(random.uniform(0.5, 0.95), 2)
@@ -41,9 +43,6 @@ def compute_ppi_validation(predicted_risk):
 
 # ✅ Function to get GPT-4 Explanation
 def get_gpt4_explanation(risk_level):
-    """
-    Calls GPT-4 Turbo API to generate an explanation for the given late blight risk level.
-    """
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo",
@@ -60,13 +59,8 @@ def get_gpt4_explanation(risk_level):
 @app.post("/predict")
 def predict(data: PredictionInput):
     try:
-        # 🔹 Dummy risk calculation (Replace with your real ML model)
         predicted_risk = int((data.humidity / 100) * 80)
-
-        # 🔹 Compute PPI validation
         validation = compute_ppi_validation(predicted_risk)
-
-        # 🔹 Get GPT-4 explanation
         gpt_explanation = get_gpt4_explanation(predicted_risk)
 
         return {
