@@ -1,14 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import openai  # ✅ GPT-4 Integration
+import openai
 import random
-import uvicorn
 import os
 
 # ✅ Initialize FastAPI app
 app = FastAPI()
 
-# ✅ Set up OpenAI API Key (Set as an environment variable in Render)
+# ✅ Load OpenAI API Key from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # ✅ Define request model
@@ -18,7 +17,7 @@ class PredictionInput(BaseModel):
     soil: str
     variety: str
 
-# ✅ Function to compute PPI validation
+# ✅ Function to calculate PPI validation metrics
 def compute_ppi_validation(predicted_risk):
     """
     Simulates PPI framework validation using statistical parameters.
@@ -28,9 +27,9 @@ def compute_ppi_validation(predicted_risk):
     confidence_score = round(random.uniform(0.5, 0.95), 2)
 
     reliability = (
-        "High Confidence" if confidence_score >= 0.8
-        else "Medium Confidence" if confidence_score >= 0.6
-        else "Low Confidence"
+        "High Confidence" if confidence_score >= 0.8 else
+        "Medium Confidence" if confidence_score >= 0.6 else
+        "Low Confidence"
     )
 
     return {
@@ -40,74 +39,42 @@ def compute_ppi_validation(predicted_risk):
         "reliability": reliability
     }
 
-# ✅ Function to generate GPT-4 explanation
-def generate_gpt_explanation(predicted_risk, weather, humidity, soil):
+# ✅ Function to get GPT-4 Explanation
+def get_gpt4_explanation(risk_level):
     """
-    Uses GPT-4 Turbo to explain the prediction in natural language.
+    Calls GPT-4 Turbo API to generate an explanation for the given late blight risk level.
     """
-    prompt = f"""
-    Given the environmental conditions:
-    - Weather: {weather}
-    - Humidity: {humidity}%
-    - Soil Type: {soil}
-    The predicted late blight risk is {predicted_risk}.
-    
-    Please provide a short, easy-to-understand explanation for farmers.
-    """
-
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[
+                {"role": "system", "content": "You are an AI explaining late blight risks in potatoes."},
+                {"role": "user", "content": f"Explain a late blight risk level of {risk_level}."}
+            ]
         )
         return response["choices"][0]["message"]["content"]
-
     except Exception as e:
         return "GPT-4 explanation is currently unavailable."
-
-# ✅ Function to generate recommendations
-def generate_recommendation(predicted_risk):
-    """
-    Provides actionable recommendations based on the risk level.
-    """
-    if predicted_risk >= 66:
-        return "⚠️ High Risk: Immediate action required! Apply fungicides and monitor crops daily."
-    elif predicted_risk >= 33:
-        return "🟡 Moderate Risk: Consider preventive fungicide applications. Check weather forecasts."
-    else:
-        return "✅ Low Risk: No immediate action needed. Continue normal monitoring."
-
-# ✅ Root endpoint (Health Check)
-@app.get("/")
-def home():
-    return {"message": "FastAPI is running!"}
 
 # ✅ Prediction endpoint
 @app.post("/predict")
 def predict(data: PredictionInput):
     try:
+        # 🔹 Dummy risk calculation (Replace with your real ML model)
         predicted_risk = int((data.humidity / 100) * 80)
 
-        # ✅ Compute validation
+        # 🔹 Compute PPI validation
         validation = compute_ppi_validation(predicted_risk)
 
-        # ✅ Generate GPT-4 Explanation
-        gpt_explanation = generate_gpt_explanation(predicted_risk, data.weather, data.humidity, data.soil)
-
-        # ✅ Generate Recommendations
-        recommendation = generate_recommendation(predicted_risk)
+        # 🔹 Get GPT-4 explanation
+        gpt_explanation = get_gpt4_explanation(predicted_risk)
 
         return {
             "variety": data.variety,
             "predicted_risk": predicted_risk,
             "validation": validation,
-            "gpt_explanation": gpt_explanation,
-            "recommendation": recommendation
+            "gpt_explanation": gpt_explanation
         }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
-
-# ✅ Run API locally
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
