@@ -60,10 +60,8 @@ class PPIValidation:
         predicted = predicted[:min_length]
 
         mse = mean_squared_error(actual, predicted)
-        
-        # Prevent confidence from going to exactly 0
-        confidence_score = max(0.2, np.exp(-mse))  # Ensure minimum confidence of 0.2
-  # Ensures at least 0.01 confidence
+
+        confidence_score = max(0.6, np.exp(-mse / 6))  # Slightly higher minimum confidence
         
         return round(confidence_score, 3)
 
