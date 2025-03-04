@@ -25,6 +25,7 @@ httpx>=0.28.1  # Modern HTTP client (async support)
 requests>=2.32.3  # HTTP requests
 urllib3>=2.3.0  # Core networking for requests
 websocket-client>=1.8.0  # For real-time communication (if applicable)
+flask>=3.0.3  # ✅ Added Flask for API handling
 
 # ======================================
 # 🔹 Notebook & Jupyter Support
