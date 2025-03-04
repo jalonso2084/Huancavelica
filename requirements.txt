@@ -16,16 +16,17 @@ xgboost>=2.1.4  # Gradient boosting for ML models
 # ======================================
 matplotlib>=3.10.0  # Plotting library
 seaborn>=0.12.2  # Statistical data visualization
-plotly>=5.0.0  # Interactive plots & graphs (added to fix the error)
+plotly>=5.0.0  # Interactive plots & graphs
 
 # ======================================
 # 🔹 Web & API Handling
 # ======================================
+flask>=3.0.3  # ✅ Added Flask for API handling
+gunicorn>=21.2.0  # ✅ WSGI server for running Flask apps (REQUIRED)
 httpx>=0.28.1  # Modern HTTP client (async support)
 requests>=2.32.3  # HTTP requests
 urllib3>=2.3.0  # Core networking for requests
 websocket-client>=1.8.0  # For real-time communication (if applicable)
-flask>=3.0.3  # ✅ Added Flask for API handling
 
 # ======================================
 # 🔹 Notebook & Jupyter Support
@@ -53,10 +54,9 @@ tornado>=6.4.2  # Async networking framework (used by Jupyter)
 traitlets>=5.14.3  # Configuration system for Python apps
 
 # ======================================
-# ✅ FastAPI & Web Server
-# ======================================
-fastapi[standard]  # API framework
-uvicorn>=0.28.0  # ASGI server for FastAPI
+# ✅ FastAPI & Web Server (NOT NEEDED for Flask)
+# fastapi[standard]  # ❌ Remove this if you're using Flask instead of FastAPI
+uvicorn>=0.28.0  # ❌ REMOVE if not using FastAPI (replaced with Gunicorn)
 
 # ======================================
 # ✅ Streamlit for Web UI
@@ -64,6 +64,6 @@ uvicorn>=0.28.0  # ASGI server for FastAPI
 streamlit>=1.30.0  # Web app framework
 
 # ======================================
-# ✅ AI Integration (Missing Dependency)
+# ✅ AI Integration
 # ======================================
 openai>=1.3.5  # ✅ REQUIRED for GPT-4 Turbo explanations
