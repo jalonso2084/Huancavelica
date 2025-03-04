@@ -38,18 +38,19 @@ if st.button("Predict Blight Risk"):
         if "predicted_risk" in result and "validation" in result:
             predicted_risk = result["predicted_risk"]
             validation = result["validation"]
+
+            # ✅ Fetch AI Explanation & Recommendation
             gpt_explanation = result.get("gpt_explanation", "No AI explanation available.")
-            recommendation = result.get("recommendation", "No specific action needed.")
 
             # ✅ Display Results
             st.markdown(f"<h2 style='text-align: center; color: red;'>Predicted Risk: {predicted_risk}</h2>", unsafe_allow_html=True)
             st.markdown(f"<h3 style='text-align: center;'>🔎 PPI Validation: {validation['reliability']}</h3>", unsafe_allow_html=True)
 
             # ✅ Show AI Explanation
-            st.info(f"💡 **AI Explanation:** {gpt_explanation}")
-
-            # ✅ Show Recommendation
-            st.success(f"✅ **Recommended Action:** {recommendation}")
+            if gpt_explanation and gpt_explanation != "GPT-4 explanation is currently unavailable.":
+                st.info(f"💡 **AI Explanation:**\n\n{gpt_explanation}")
+            else:
+                st.warning("⚠️ AI-generated explanation is not available.")
 
         else:
             st.error("⚠️ Unexpected response from the server.")
@@ -57,6 +58,6 @@ if st.button("Predict Blight Risk"):
     except Exception as e:
         st.error(f"Error connecting to API: {e}")
 
-# ✅ Updated Footer with Your Name
+# ✅ Updated Footer
 st.markdown("---")
 st.markdown("🚀 Developed for **Jorge Luis Alonso** | **AI-Driven Agricultural Data Specialist**")
