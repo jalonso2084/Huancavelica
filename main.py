@@ -40,6 +40,13 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
         print(f"❌ ERROR: OpenAI API call failed: {e}")  # Debugging
         return f"Error generating AI explanation: {e}"
 
+@app.route("/", methods=["GET"])
+def home():
+    """
+    Basic home route to check if the API is running.
+    """
+    return jsonify({"message": "Late Blight Prediction API is running!"})
+
 @app.route("/predict", methods=["POST"])
 def predict():
     """
@@ -50,7 +57,7 @@ def predict():
         if not data:
             return jsonify({"error": "Missing request data"}), 400
 
-        predicted_risk = 68  # Replace with actual model output
+        predicted_risk = 68  # Replace this with actual model output
         risk_factors = "High humidity (85%), Recent Rainfall"
 
         # ✅ Generate AI explanation using GPT-4
