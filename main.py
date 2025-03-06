@@ -19,31 +19,34 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
     Calls GPT-4 to generate an explanation for the given risk prediction.
     """
     try:
-        print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")  # Debugging
+        print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")
 
-        # ✅ Prevent rapid consecutive requests to OpenAI (avoids overloading memory)
+        # ✅ Prevent rapid consecutive requests to OpenAI (avoids API rate limits)
         time.sleep(1)
 
         response = client.chat.completions.create(
             model="gpt-4-turbo",
-            timeout=10,  # ✅ Set a timeout to prevent the API from hanging
+            max_tokens=400,  # ✅ Reduce response size to prevent timeouts
+            timeout=10,  # ✅ Set timeout to prevent long hangs
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
                 {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
             ]
         )
 
-        explanation = response.choices[0].message.content
-        print("✅ GPT-4 Response Received:\n", explanation)  # Debugging
-        return explanation
+        return response.choices[0].message.content
 
-    except openai.Timeout:
+    except openai.error.Timeout:
         print("❌ ERROR: GPT-4 took too long to respond.")
         return "Error: GPT-4 response timed out."
 
-    except openai.OpenAIError as e:
-        print(f"❌ ERROR: OpenAI API call failed: {e}")  # Debugging
+    except openai.error.OpenAIError as e:
+        print(f"❌ ERROR: OpenAI API call failed: {e}")
         return f"Error generating AI explanation: {e}"
+
+    except Exception as e:
+        print(f"❌ ERROR: {e}")  # ✅ General exception handling
+        return f"Unexpected error: {e}"
 
 @app.route("/", methods=["GET"])
 def home():
@@ -132,7 +135,7 @@ if __name__ == "__main__":
 
     options = {
         "bind": "0.0.0.0:5000",
-        "workers": 2,  # ✅ Reduced from 4 to 2 to prevent memory overload
+        "workers": 1,  # ✅ Reduced from 2 to 1 to prevent memory overload
     }
 
     GunicornApp(app, options).run()
