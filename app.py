@@ -1,6 +1,10 @@
 import streamlit as st
 import requests
 
+# ✅ Load potato variety descriptions from file
+with open("potato_varieties.txt", "r", encoding="utf-8") as file:
+    variety_info = file.read()
+
 # ✅ Set Page Title
 st.set_page_config(page_title="AI-Powered Late Blight Prediction System")
 
@@ -14,9 +18,7 @@ humidity = st.slider("Humidity (%)", min_value=10, max_value=100, value=50)
 soil_type = st.selectbox("Soil Type", ["Sandy", "Loamy", "Clay"])
 potato_variety = st.selectbox(
     "Potato Variety",
-    ["INIA-303 Canchan", "INIA-302 Amarilis", "Yungay", "INIA-321 Kawsay",
-     "CIP308488.92", "CIP308495.227", "CIP308478.59", "CIP308486.355",
-     "CIP308487.157", "CIP308433.101", "CIP308436.84", "CIP308502.95"]
+    ["INIA-303 Canchan", "INIA-302 Amarilis", "INIA-321 Kawsay", "Yungay", "Poccoya", "CIP-Matilde"]
 )
 
 # ✅ API Connection
@@ -38,9 +40,14 @@ if st.button("Predict Blight Risk"):
         if "predicted_risk" in result and "validation" in result:
             predicted_risk = result["predicted_risk"]
             validation = result["validation"]
-
-            # ✅ Fetch AI Explanation & Recommendation
             gpt_explanation = result.get("gpt_explanation", "No AI explanation available.")
+
+            # ✅ Fetch variety-specific details from reference text
+            variety_details = "No specific information available."
+            for line in variety_info.split("\n"):
+                if potato_variety in line:
+                    variety_details = line.strip()
+                    break
 
             # ✅ Display Results
             st.markdown(f"<h2 style='text-align: center; color: red;'>Predicted Risk: {predicted_risk}</h2>", unsafe_allow_html=True)
@@ -49,6 +56,7 @@ if st.button("Predict Blight Risk"):
             # ✅ Show AI Explanation
             if gpt_explanation and gpt_explanation != "GPT-4 explanation is currently unavailable.":
                 st.info(f"💡 **AI Explanation:**\n\n{gpt_explanation}")
+                st.success(f"📝 **Potato Variety Information:**\n\n{variety_details}")
             else:
                 st.warning("⚠️ AI-generated explanation is not available.")
 
@@ -58,6 +66,6 @@ if st.button("Predict Blight Risk"):
     except Exception as e:
         st.error(f"Error connecting to API: {e}")
 
-# ✅ Updated Footer
+# ✅ Updated Footer with Clickable LinkedIn Link
 st.markdown("---")
-st.markdown("🚀 Developed for **Jorge Luis Alonso** | **AI-Driven Agricultural Data Specialist**")
+st.markdown("🚀 Developed for **[Jorge Luis Alonso](https://www.linkedin.com/in/jorgeluisalonso/)** | **AI-Driven Agricultural Data Specialist**")
