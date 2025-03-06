@@ -1,0 +1,62 @@
+Here is the translated information about the potato varieties INIA-303 Canchan, INIA-302 Amarilis, and Yungay, based on the document Identification of Elite Potato Clones with Resistance to Late Blight Through Participatory Varietal Selection in Peru.
+
+1. Disease Resistance (Especially to Late Blight)
+INIA-303 Canchan: Susceptible to Late Blight (Phytophthora infestans).
+INIA-302 Amarilis: Moderately resistant to Late Blight.
+Yungay: Susceptible to Late Blight.
+The document highlights that these varieties are among the most widely grown in Peru, but their high susceptibility to Late Blight has driven the need to develop clones with greater resistance to the disease.
+
+2. Yield Potential
+INIA-303 Canchan: In trials, it yielded 33.61 t/ha in Cañaypata and 20.94 t/ha in Arcopampa, making it a high-yielding variety under certain conditions.
+INIA-302 Amarilis: Showed variable yields, reaching up to 45.86 t/ha in Macullida and 37.05 t/ha in Chucmar, but with less stability in areas affected by Late Blight.
+Yungay: Yields were highly affected by Late Blight in areas with severe disease pressure, dropping to 5.00 t/ha in Chucmar, although under better conditions, it achieved 49.41 t/ha in Macullida.
+
+3. Adaptability to Climate and Soil Conditions
+INIA-303 Canchan and Yungay: Selected by farmers for altitudes above 3500 masl, due to their adaptation to cold climates and Andean soils.
+INIA-302 Amarilis: Performed better in locations with lower Late Blight pressure and well-drained soils.
+Yungay: Poor adaptability in areas with high humidity and Late Blight pressure, but good yields in dry climates.
+
+4. Susceptibility to Environmental Stresses (Drought, Frost, Pests)
+INIA-303 Canchan and Yungay: Highly susceptible to Late Blight, with reduced yields in areas with high humidity and continuous rainfall.
+INIA-302 Amarilis: Greater resistance in environments with biotic and abiotic stress, but variable yield stability depending on location.
+Yungay: Does not tolerate frost or drought well, which affects its stability in extreme altitudes.
+
+5. Market Value and Farmer Preferences
+INIA-303 Canchan and Yungay: Among the most widely consumed varieties in Peru, covering more than 70% of the cultivated area.
+INIA-303 Canchan: Preferred for its color, texture, and yield, although farmers are looking for more disease-resistant alternatives.
+INIA-302 Amarilis: Its moderate resistance to Late Blight makes it attractive in areas with high disease pressure, but its market adoption remains lower compared to Yungay.
+
+Conclusion
+The varieties INIA-303 Canchan and Yungay are highly susceptible to Late Blight, limiting their yield stability in humid conditions. While they are very popular in the market, farmers have shown interest in more resistant varieties that can maintain stable yields without heavy reliance on fungicides. In contrast, INIA-302 Amarilis offers better resistance, but its market adoption remains lower.
+
+
+########
+
+
+Resistance to Late Blight
+Some native potato varieties have naturally developed resistance to late blight (Phytophthora infestans) due to their adaptation to local agroecological conditions.
+The Poccoya variety (also known as puqya uya), cultivated in high-altitude communities in Huancavelica, has shown to be highly resistant to late blight and cold temperatures. It can maintain stable yields even under adverse conditions​Late Blight in Potatoes….
+Other local varieties have shown partial or moderate resistance in field studies and could be used for genetic improvement​First signs of late bli….
+Yield Potential
+Varieties with good yield potential in Huancavelica:
+CIP-Matilde: A modern variety with improved resistance to late blight, yielding equal or higher than the commercial Yungay variety​Late Blight in Potatoes….
+Traditional varieties: While some have relatively lower yields compared to commercial varieties, certain community-selected crops have achieved yields of over 30 t/ha under optimal conditions​Identification of Elite….
+The Poccoya variety can produce 400–1000 g per plant, with notable resistance to diseases and environmental factors​Late Blight in Potatoes….
+Adaptability to Climate and Soil Conditions
+Well-adapted local species and varieties include:
+Solanum tuberosum subsp. andigena: Cultivated at high altitudes and resistant to cold temperatures.
+Solanum goniocalyx and Solanum chaucha: Well-suited to Huancavelica’s agroecological conditions.
+Poccoya: Has demonstrated high resistance to both cold and late blight, in addition to natural adaptation to high altitudes​Late Blight in Potatoes….
+Farmers have employed strategies such as mixed planting (chaqru), which enhances crop stability against variable climatic conditions​Identification of Elite….
+Susceptibility to Environmental Stresses (Drought, Frost, Pests)
+Some native varieties have demonstrated tolerance to harsh climatic factors such as frost and drought.
+In participatory selection studies, farmers prioritize varieties resistant to pests like the Andean potato weevil and extreme conditions like frequent frost​Identification of Elite….
+Selected varieties such as INIA-321 Kawsay have exhibited high resistance to late blight, vigorous flowering, and good yields at altitudes above 3,700 m a.s.l.​Identification of Elite….
+Market Value and Farmer Preferences
+The most valued varieties among farmers combine disease resistance, high yield, good taste, and market demand.
+Some varieties, such as Yungay and INIA-303 Canchan, are popular in urban markets, although they are susceptible to late blight​Farmer Perceptions Rela….
+In rural communities, farmers prioritize varieties with natural resistance and desirable culinary qualities (texture, color, and flavor)​Identification of Elite….
+
+Conclusion
+The catalog and reviewed studies indicate that the diversity of native potatoes in Huancavelica offers options that are resistant to late blight, well-adapted to local climate, and have varied market preferences. The integration of resistant varieties like Poccoya and the development of selected clones could strengthen local production and reduce dependency on fungicides.
+
