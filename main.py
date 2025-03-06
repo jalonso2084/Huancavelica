@@ -21,13 +21,13 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
     try:
         print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")
 
-        # ✅ Prevent rapid consecutive requests to OpenAI (avoids API rate limits)
+        # ✅ Prevent rapid consecutive requests (avoids OpenAI rate limits)
         time.sleep(1)
 
         response = client.chat.completions.create(
             model="gpt-4-turbo",
-            max_tokens=400,  # ✅ Reduce response size to prevent timeouts
-            timeout=10,  # ✅ Set timeout to prevent long hangs
+            max_tokens=300,  # ✅ Reduce response size to prevent memory issues
+            timeout=10,  # ✅ Set timeout to prevent long API calls
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
                 {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
@@ -44,8 +44,8 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
         print(f"❌ ERROR: OpenAI API call failed: {e}")
         return f"Error generating AI explanation: {e}"
 
-    except Exception as e:
-        print(f"❌ ERROR: {e}")  # ✅ General exception handling
+    except Exception as e:  # ✅ Correct exception handling
+        print(f"❌ ERROR: {e}")
         return f"Unexpected error: {e}"
 
 @app.route("/", methods=["GET"])
