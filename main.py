@@ -24,7 +24,7 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
             model="gpt-4-turbo",
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
-                {"role": "user", "content": f"The model predicts {predicted_risk} risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
+                {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
             ]
         )
 
@@ -50,22 +50,51 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     """
-    API endpoint that predicts late blight risk and provides an AI-generated explanation.
+    API endpoint that dynamically predicts late blight risk.
     """
     try:
         data = request.get_json()
         if not data:
             return jsonify({"error": "Missing request data"}), 400
 
-        predicted_risk = 68  # Replace this with actual model output
-        risk_factors = "High humidity (85%), Recent Rainfall"
+        # ✅ Extract Input Data
+        variety = data.get("variety", "Unknown")
+        humidity = data.get("humidity", 50)  # Default to 50 if missing
+        weather = data.get("weather", "Cloudy")
+        soil = data.get("soil", "Loamy")
 
-        # ✅ Generate AI explanation using GPT-4
+        # ✅ Compute Dynamic Risk Score
+        predicted_risk = 50  # Base risk
+
+        # Adjust risk based on humidity
+        if humidity > 80:
+            predicted_risk += 15  # High humidity increases risk
+        elif humidity < 40:
+            predicted_risk -= 10  # Low humidity decreases risk
+
+        # Adjust risk based on weather
+        if weather == "Rainy":
+            predicted_risk += 20  # Rainy weather significantly increases risk
+        elif weather == "Sunny":
+            predicted_risk -= 10  # Sunny weather reduces risk
+
+        # Adjust risk based on potato variety
+        if variety in ["INIA-321 Kawsay", "Poccoya"]:
+            predicted_risk -= 10  # Resistant varieties decrease risk
+        elif variety in ["Yungay"]:
+            predicted_risk += 10  # Susceptible varieties increase risk
+
+        # ✅ Ensure risk stays between 0-100%
+        predicted_risk = max(0, min(100, predicted_risk))
+
+        risk_factors = f"Humidity: {humidity}%, Weather: {weather}, Soil: {soil}, Variety: {variety}"
+
+        # ✅ Generate AI Explanation using GPT-4
         gpt_explanation = get_gpt4_explanation(predicted_risk, risk_factors)
 
-        # ✅ Return the response as JSON
+        # ✅ Return the response
         return jsonify({
-            "variety": data.get("variety", "Unknown"),
+            "variety": variety,
             "predicted_risk": predicted_risk,
             "validation": {
                 "ppi_correlation": 0.84,
