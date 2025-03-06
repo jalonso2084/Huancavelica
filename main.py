@@ -1,5 +1,6 @@
 import openai
 import os
+import time
 from flask import Flask, request, jsonify
 
 # ✅ Initialize Flask API
@@ -20,8 +21,12 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
     try:
         print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")  # Debugging
 
+        # ✅ Prevent rapid consecutive requests to OpenAI (avoids overloading memory)
+        time.sleep(1)
+
         response = client.chat.completions.create(
             model="gpt-4-turbo",
+            timeout=10,  # ✅ Set a timeout to prevent the API from hanging
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
                 {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
@@ -32,9 +37,9 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
         print("✅ GPT-4 Response Received:\n", explanation)  # Debugging
         return explanation
 
-    except openai.AuthenticationError:
-        print("❌ ERROR: Invalid OpenAI API Key! Check your key at https://platform.openai.com/account/api-keys.")
-        return "Error: Invalid API Key"
+    except openai.Timeout:
+        print("❌ ERROR: GPT-4 took too long to respond.")
+        return "Error: GPT-4 response timed out."
 
     except openai.OpenAIError as e:
         print(f"❌ ERROR: OpenAI API call failed: {e}")  # Debugging
@@ -110,4 +115,24 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    from gunicorn.app.base import BaseApplication
+
+    class GunicornApp(BaseApplication):
+        def __init__(self, app, options=None):
+            self.options = options or {}
+            self.application = app
+            super().__init__()
+
+        def load_config(self):
+            for key, value in self.options.items():
+                self.cfg.set(key, value)
+
+        def load(self):
+            return self.application
+
+    options = {
+        "bind": "0.0.0.0:5000",
+        "workers": 2,  # ✅ Reduced from 4 to 2 to prevent memory overload
+    }
+
+    GunicornApp(app, options).run()
