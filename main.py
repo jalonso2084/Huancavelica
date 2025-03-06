@@ -1,10 +1,13 @@
 import openai
 import os
-import time
+import platform
 from flask import Flask, request, jsonify
 
 # ✅ Initialize Flask API
 app = Flask(__name__)
+
+# ✅ Detect Operating System
+IS_WINDOWS = platform.system() == "Windows"
 
 # ✅ Set OpenAI API key (ensure it's set in the environment)
 api_key = os.getenv("OPENAI_API_KEY")
@@ -19,34 +22,29 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
     Calls GPT-4 to generate an explanation for the given risk prediction.
     """
     try:
-        print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")
-
-        # ✅ Prevent rapid consecutive requests (avoids OpenAI rate limits)
-        time.sleep(1)
+        print(f"🔄 Calling GPT-4 with risk: {predicted_risk}, factors: {risk_factors}")  # Debugging
 
         response = client.chat.completions.create(
             model="gpt-4-turbo",
-            max_tokens=300,  # ✅ Reduce response size to prevent memory issues
-            timeout=10,  # ✅ Set timeout to prevent long API calls
+            max_tokens=300,  # ✅ Limit response size
+            timeout=10,  # ✅ Prevent long waits
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
                 {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
             ]
         )
 
-        return response.choices[0].message.content
+        explanation = response.choices[0].message.content
+        print("✅ GPT-4 Response Received:\n", explanation)  # Debugging
+        return explanation
 
-    except openai.error.Timeout:
-        print("❌ ERROR: GPT-4 took too long to respond.")
-        return "Error: GPT-4 response timed out."
+    except openai.AuthenticationError:
+        print("❌ ERROR: OpenAI API Key is invalid or missing.")
+        return "Error: Invalid API Key. Please check your OpenAI key settings."
 
-    except openai.error.OpenAIError as e:
-        print(f"❌ ERROR: OpenAI API call failed: {e}")
+    except openai.OpenAIError as e:
+        print(f"❌ ERROR: OpenAI API call failed: {e}")  # Debugging
         return f"Error generating AI explanation: {e}"
-
-    except Exception as e:  # ✅ Correct exception handling
-        print(f"❌ ERROR: {e}")
-        return f"Unexpected error: {e}"
 
 @app.route("/", methods=["GET"])
 def home():
@@ -118,24 +116,29 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    from gunicorn.app.base import BaseApplication
+    if IS_WINDOWS:
+        print("✅ Running on Windows with Waitress")
+        from waitress import serve
+        serve(app, host="0.0.0.0", port=5000)
+    else:
+        print("✅ Running on Linux with Gunicorn")
+        from gunicorn.app.base import BaseApplication
 
-    class GunicornApp(BaseApplication):
-        def __init__(self, app, options=None):
-            self.options = options or {}
-            self.application = app
-            super().__init__()
+        class GunicornApp(BaseApplication):
+            def __init__(self, app, options=None):
+                self.options = options or {}
+                self.application = app
+                super().__init__()
 
-        def load_config(self):
-            for key, value in self.options.items():
-                self.cfg.set(key, value)
+            def load_config(self):
+                for key, value in self.options.items():
+                    self.cfg.set(key, value)
 
-        def load(self):
-            return self.application
+            def load(self):
+                return self.application
 
-    options = {
-        "bind": "0.0.0.0:5000",
-        "workers": 1,  # ✅ Reduced from 2 to 1 to prevent memory overload
-    }
-
-    GunicornApp(app, options).run()
+        options = {
+            "bind": "0.0.0.0:5000",
+            "workers": 1  # ✅ Reduce memory usage
+        }
+        GunicornApp(app, options).run()
