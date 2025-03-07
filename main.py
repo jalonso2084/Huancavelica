@@ -1,6 +1,8 @@
 import openai
 import os
 import platform
+import joblib  # ✅ Load Machine Learning Models
+import numpy as np
 from flask import Flask, request, jsonify
 
 # ✅ Initialize Flask API
@@ -8,6 +10,14 @@ app = Flask(__name__)
 
 # ✅ Detect Operating System
 IS_WINDOWS = platform.system() == "Windows"
+
+# ✅ Load Trained Model
+MODEL_PATH = "random_forest_model.pkl"
+if os.path.exists(MODEL_PATH):
+    model = joblib.load(MODEL_PATH)
+    print("✅ Random Forest model loaded successfully!")
+else:
+    print("❌ ERROR: No trained model found!")
 
 # ✅ Set OpenAI API key (ensure it's set in the environment)
 api_key = os.getenv("OPENAI_API_KEY")
@@ -26,8 +36,8 @@ def get_gpt4_explanation(predicted_risk, risk_factors):
 
         response = client.chat.completions.create(
             model="gpt-4-turbo",
-            max_tokens=300,  # ✅ Limit response size
-            timeout=10,  # ✅ Prevent long waits
+            max_tokens=300,
+            timeout=10,
             messages=[
                 {"role": "system", "content": "You are an AI assistant providing explanations for potato disease predictions."},
                 {"role": "user", "content": f"The model predicts {predicted_risk}% risk for late blight. Key risk factors: {risk_factors}. Explain why and suggest preventive actions."}
@@ -56,7 +66,7 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     """
-    API endpoint that dynamically predicts late blight risk.
+    API endpoint that dynamically predicts late blight risk using Random Forest.
     """
     try:
         data = request.get_json()
@@ -69,29 +79,28 @@ def predict():
         weather = data.get("weather", "Cloudy")
         soil = data.get("soil", "Loamy")
 
-        # ✅ Compute Dynamic Risk Score
-        predicted_risk = 50  # Base risk
+        # ✅ Encode categorical variables
+        weather_mapping = {"Sunny": 0, "Cloudy": 1, "Rainy": 2}
+        soil_mapping = {"Sandy": 0, "Loamy": 1, "Clay": 2}
+        variety_mapping = {
+            "INIA-303 Canchan": 0, "INIA-302 Amarilis": 1, "INIA-321 Kawsay": 2,
+            "Yungay": 3, "Poccoya": 4, "CIP-Matilde": 5
+        }
 
-        # Adjust risk based on humidity
-        if humidity > 80:
-            predicted_risk += 15  # High humidity increases risk
-        elif humidity < 40:
-            predicted_risk -= 10  # Low humidity decreases risk
+        weather_encoded = weather_mapping.get(weather, 1)
+        soil_encoded = soil_mapping.get(soil, 1)
+        variety_encoded = variety_mapping.get(variety, 3)
 
-        # Adjust risk based on weather
-        if weather == "Rainy":
-            predicted_risk += 20  # Rainy weather significantly increases risk
-        elif weather == "Sunny":
-            predicted_risk -= 10  # Sunny weather reduces risk
+        # ✅ Use Random Forest model if available
+        if os.path.exists(MODEL_PATH):
+            print("🔄 Using Random Forest Model for Prediction")
+            input_features = np.array([[humidity, weather_encoded, soil_encoded, variety_encoded]])
+            predicted_risk = model.predict(input_features)[0]
+        else:
+            print("⚠️ Falling back to static risk calculation")
+            predicted_risk = 50  # Default if model is missing
 
-        # Adjust risk based on potato variety
-        if variety in ["INIA-321 Kawsay", "Poccoya"]:
-            predicted_risk -= 10  # Resistant varieties decrease risk
-        elif variety in ["Yungay"]:
-            predicted_risk += 10  # Susceptible varieties increase risk
-
-        # ✅ Ensure risk stays between 0-100%
-        predicted_risk = max(0, min(100, predicted_risk))
+        predicted_risk = max(0, min(100, predicted_risk))  # ✅ Ensure risk stays within 0-100%
 
         risk_factors = f"Humidity: {humidity}%, Weather: {weather}, Soil: {soil}, Variety: {variety}"
 
