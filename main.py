@@ -9,10 +9,16 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "random_forest_model.pkl")
 
 # Load the trained model
+print("✅ Loading Random Forest model...")
 model = joblib.load(MODEL_PATH)
+print("✅ Random Forest model loaded successfully!")
 
 # Initialize Flask app
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return jsonify({"message": "API is running! Use /predict to make predictions."})
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -77,4 +83,4 @@ def predict():
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=True)
