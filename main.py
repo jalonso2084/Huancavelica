@@ -23,8 +23,13 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get JSON data from request
+        print("Received prediction request.")  # Added log
         data = request.get_json()
+        print(f"Received JSON data: {data}")  # Added log
+
+        # Input validation
+        if not isinstance(data, dict):
+            return jsonify({"error": "Invalid JSON format"}), 400
         
         # Extract inputs from request, with default values to prevent errors
         variety = data.get("variety", 0.0)
@@ -75,12 +80,16 @@ def predict():
         
         # Make prediction
         prediction = model.predict(input_df)
+        print(f"Prediction result: {prediction}")  # Added log
         
         # Return prediction as JSON
         return jsonify({"prediction": prediction.tolist()})
     
+    except KeyError:
+        return jsonify({"error": "Missing required field"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)})
+        print(f"Error during prediction: {e}")  # Added log
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))  # Ensure the correct port for Render
