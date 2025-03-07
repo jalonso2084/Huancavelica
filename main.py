@@ -92,5 +92,7 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
+    print("Registered Routes:")
+    print(app.url_map)  # Print registered routes to verify /predict exists
     port = int(os.environ.get("PORT", 10000))  # Ensure the correct port for Render
     app.run(host='0.0.0.0', port=port, debug=True)
