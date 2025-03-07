@@ -10,8 +10,12 @@ MODEL_PATH = os.path.join(BASE_DIR, "random_forest_model.pkl")
 
 # Load the trained model
 print("✅ Loading Random Forest model...")
-model = joblib.load(MODEL_PATH)
-print("✅ Random Forest model loaded successfully!")
+try:
+    model = joblib.load(MODEL_PATH)
+    print("✅ Random Forest model loaded successfully!")
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
+    model = None
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -22,6 +26,9 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    if model is None:
+        return jsonify({"error": "Model failed to load."}), 500
+    
     try:
         print("Received prediction request.")  # Added log
         data = request.get_json()
