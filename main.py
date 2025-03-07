@@ -1,10 +1,14 @@
+import os
 import joblib
 import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify
 
+# Get the current directory where main.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "random_forest_model.pkl")
+
 # Load the trained model
-MODEL_PATH = "G:/My Drive/Huancavelica/random_forest_model.pkl"  # Updated model path
 model = joblib.load(MODEL_PATH)
 
 # Initialize Flask app
