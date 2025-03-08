@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 import joblib
+import numpy as np
 
 app = Flask(__name__)
 
@@ -13,9 +14,8 @@ try:
 except Exception as e:
     print(f"❌ Error loading model: {e}")
 
-# ✅ Check registered routes
-@app.before_first_request
-def register_routes():
+# ✅ Register routes on startup (compatible with Flask 2.3+)
+with app.app_context():
     print("✅ Registered Routes:")
     print(app.url_map)
 
@@ -39,13 +39,13 @@ def predict():
         if not all(field in data for field in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
         
-        # ✅ Preprocess data (example)
-        variety = data["variety"]
+        # ✅ Convert inputs into the format expected by the model
+        variety = float(data["variety"]) if data["variety"].replace(".", "").isnumeric() else 0
         humidity = float(data["humidity"])
-        weather = data["weather"]
-        soil = data["soil"]
+        weather = float(data["weather"]) if data["weather"].replace(".", "").isnumeric() else 0
+        soil = float(data["soil"]) if data["soil"].replace(".", "").isnumeric() else 0
 
-        input_features = [[variety, humidity, weather, soil]]
+        input_features = np.array([[variety, humidity, weather, soil]])
         print(f"✅ Input features: {input_features}")
 
         # ✅ Make prediction
@@ -53,6 +53,14 @@ def predict():
         print(f"✅ Prediction result: {prediction}")
 
         return jsonify({"prediction": prediction.tolist()}), 200
+    
+    except KeyError as e:
+        print(f"❌ Missing key: {e}")
+        return jsonify({"error": f"Missing key: {e}"}), 400
+    
+    except ValueError as e:
+        print(f"❌ Invalid value: {e}")
+        return jsonify({"error": f"Invalid value: {e}"}), 400
     
     except Exception as e:
         print(f"❌ Error during prediction: {e}")
