@@ -30,9 +30,9 @@ def predict():
         return jsonify({"error": "Model failed to load."}), 500
     
     try:
-        print("Received prediction request.")  # Added log
+        print("🚀 Received request at /predict")  # Debugging log
         data = request.get_json()
-        print(f"Received JSON data: {data}")  # Added log
+        print(f"Received JSON data: {data}")  # Debugging log
 
         # Input validation
         if not isinstance(data, dict):
@@ -87,7 +87,7 @@ def predict():
         
         # Make prediction
         prediction = model.predict(input_df)
-        print(f"Prediction result: {prediction}")  # Added log
+        print(f"Prediction result: {prediction}")  # Debugging log
         
         # Return prediction as JSON
         return jsonify({"prediction": prediction.tolist()})
@@ -95,7 +95,7 @@ def predict():
     except KeyError:
         return jsonify({"error": "Missing required field"}), 400
     except Exception as e:
-        print(f"Error during prediction: {e}")  # Added log
+        print(f"❌ Error during prediction: {e}")  # Debugging log
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
