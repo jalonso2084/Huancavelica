@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 import logging
+import os
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
@@ -24,7 +25,7 @@ def home():
     logging.info("✅ Health check requested.")
     return jsonify({"message": "API is running! Use /predict to make predictions."})
 
-# ✅ Prediction endpoint
+# ✅ Prediction endpoint (fixing feature size mismatch)
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
@@ -36,55 +37,69 @@ def predict():
             logging.warning("❌ No data received.")
             return jsonify({"error": "No input data provided"}), 400
 
-        # ✅ Validate input fields
-        required_fields = ["variety", "humidity", "weather", "soil"]
-        missing_fields = [field for field in required_fields if field not in data]
-        if missing_fields:
-            error_message = f"Missing fields: {', '.join(missing_fields)}"
-            logging.warning(f"❌ {error_message}")
-            return jsonify({"error": error_message}), 400
+        # ✅ Expected 11 input fields
+        required_fields = [
+            "variety", "humidity", "weather", "soil",
+            "feature_5", "feature_6", "feature_7",
+            "feature_8", "feature_9", "feature_10", "feature_11"
+        ]
         
-        # ✅ Type and range validation
-        try:
-            variety = int(data["variety"])
-            humidity = float(data["humidity"])
-            weather = int(data["weather"])
-            soil = int(data["soil"])
+        # ✅ Provide default values for missing fields
+        input_data = [
+            data.get("variety", 0),
+            data.get("humidity", 0.0),
+            data.get("weather", 0),
+            data.get("soil", 0),
+            data.get("feature_5", 0),
+            data.get("feature_6", 0),
+            data.get("feature_7", 0),
+            data.get("feature_8", 0),
+            data.get("feature_9", 0),
+            data.get("feature_10", 0),
+            data.get("feature_11", 0)
+        ]
 
-            # ✅ Range checks
-            if not (0 <= humidity <= 100):
-                raise ValueError("Humidity must be between 0 and 100.")
-            if not (0 <= weather <= 10):  # Assuming 10 is the highest expected weather code
-                raise ValueError("Invalid weather code.")
-            if not (0 <= soil <= 10):  # Assuming 10 is the highest soil type code
-                raise ValueError("Invalid soil type.")
+        # ✅ Type validation
+        try:
+            input_data = [
+                int(input_data[0]),  # variety
+                float(input_data[1]),  # humidity
+                int(input_data[2]),  # weather
+                int(input_data[3]),  # soil
+                int(input_data[4]), int(input_data[5]), int(input_data[6]),
+                int(input_data[7]), int(input_data[8]), int(input_data[9]),
+                int(input_data[10])
+            ]
         except ValueError as e:
-            logging.error(f"❌ Invalid input: {e}")
-            return jsonify({"error": f"Invalid input: {e}"}), 400
+            logging.error(f"❌ Type conversion error: {e}")
+            return jsonify({"error": f"Invalid input format: {e}"}), 400
 
         # ✅ Check if model is loaded
         if model is None:
             logging.error("❌ Model not loaded.")
             return jsonify({"error": "Model not loaded"}), 500
 
-        # ✅ Prepare input for model
-        input_data = np.array([[variety, humidity, weather, soil]])
+        # ✅ Convert input to numpy array (reshaped for scikit-learn)
+        input_array = np.array([input_data])
+        logging.info(f"✅ Prepared input: {input_array}")
 
         # ✅ Make prediction
-        prediction = model.predict(input_data)[0]
+        prediction = model.predict(input_array)[0]
         logging.info(f"✅ Prediction: {prediction}")
 
-        # ✅ Return result (convert to int if needed)
+        # ✅ Return prediction as JSON
         response = {
-            "prediction": int(prediction) if prediction.is_integer() else float(prediction),
+            "prediction": float(prediction),  # Ensure float for JSON compatibility
             "model_version": model_version
         }
-        return jsonify(response)
+
+        return jsonify(response), 200
 
     except Exception as e:
         logging.error(f"❌ Error during prediction: {e}")
         return jsonify({"error": str(e)}), 500
 
-# ✅ Run Flask app locally for testing
+# ✅ Run Flask app on the Render-assigned port
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
