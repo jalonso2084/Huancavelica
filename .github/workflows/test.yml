@@ -37,7 +37,10 @@ jobs:
       - name: 🔍 Test Python Import
         run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
 
+      # ✅ Pass TEST_MODE environment variable
       - name: ✅ Run Tests
+        env:
+          TESTING: true
         run: |
           cd $GITHUB_WORKSPACE
           pytest
@@ -63,7 +66,7 @@ jobs:
       - name: 🔍 Debug - Check Directory Structure (Windows)
         run: Get-ChildItem -Recurse
 
-      - name: 🛠 Set UTF-8 Encoding (Windows)  # Moved this step to the correct position
+      - name: 🛠 Set UTF-8 Encoding (Windows)
         run: chcp 65001
 
       - name: 🛠 Set PYTHONPATH (Windows)
@@ -74,7 +77,10 @@ jobs:
       - name: 🔍 Test Python Import
         run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
 
+      # ✅ Pass TEST_MODE environment variable
       - name: ✅ Run Tests (Windows)
+        env:
+          TESTING: true
         run: |
           cd $env:GITHUB_WORKSPACE
           pytest

@@ -1,0 +1,3 @@
+variety,humidity,weather_condition,soil_type,plant_health_index,disease_pressure_index,growth_stage,canopy_coverage,rainfall,temperature_variability,soil_moisture,blight_risk
+2,95,1,4,5,2,3,1,20,5,8,1
+1,85,2,3,4,1,2,0,15,3,7,0

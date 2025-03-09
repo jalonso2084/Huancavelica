@@ -1,62 +1,67 @@
-import streamlit as st
-import requests
+from flask import Flask, request, jsonify
+import joblib
+import numpy as np
+import logging
 
-# ✅ Set Page Title
-st.set_page_config(page_title="AI-Powered Late Blight Prediction System")
+# ✅ Initialize Flask app
+app = Flask(__name__)
 
-# ✅ UI Header
-st.markdown("<h1 style='text-align: center;'>🌱 AI-Powered Late Blight Prediction System</h1>", unsafe_allow_html=True)
-st.write("### Enter Environmental Conditions")
+# ✅ Configure Logging
+logging.basicConfig(level=logging.INFO)
 
-# ✅ User Input Fields
-weather = st.selectbox("Weather Condition", ["Sunny", "Cloudy", "Rainy"])
-humidity = st.slider("Humidity (%)", min_value=10, max_value=100, value=50)
-soil_type = st.selectbox("Soil Type", ["Sandy", "Loamy", "Clay"])
-potato_variety = st.selectbox(
-    "Potato Variety",
-    ["INIA-303 Canchan", "INIA-302 Amarilis", "INIA-321 Kawsay", "Yungay", "Poccoya",
-     "CIP-Matilde"]
-)
+# ✅ Load the model
+MODEL_PATH = "random_forest_model.pkl"
+try:
+    model = joblib.load(MODEL_PATH)
+    logging.info(f"✅ Model loaded: {type(model)}")
+    logging.info(f"Number of estimators: {model.n_estimators}")
+    logging.info(f"Max depth: {model.max_depth}")
+except Exception as e:
+    logging.error(f"❌ Error loading model: {e}")
+    model = None
 
-# ✅ API Connection
-api_url = "https://huancavelica.onrender.com/predict"
+# ✅ Prediction Route
+@app.route("/predict", methods=["POST"])
+def predict():
+    if model is None:
+        return jsonify({"error": "Model is not loaded."}), 500
 
-# ✅ Prediction Button
-if st.button("Predict Blight Risk"):
-    data = {
-        "humidity": humidity,
-        "weather": weather,
-        "soil": soil_type,
-        "variety": potato_variety
-    }
+    data = request.get_json()
+    logging.info(f"✅ Received data: {data}")
 
     try:
-        response = requests.post(api_url, json=data)
-        result = response.json()
+        input_data = [
+            data.get("variety", 0),
+            data.get("humidity", 0.0),
+            data.get("weather_condition", 0),
+            data.get("soil_type", 0),
+            data.get("plant_health_index", 0),
+            data.get("disease_pressure_index", 0),
+            data.get("growth_stage", 0),
+            data.get("canopy_coverage", 0),
+            data.get("rainfall", 0),
+            data.get("temperature_variability", 0),
+            data.get("soil_moisture", 0)
+        ]
 
-        if "predicted_risk" in result and "validation" in result:
-            predicted_risk = result["predicted_risk"]
-            validation = result["validation"]
+        input_array = np.array([input_data])
+        prediction = model.predict(input_array)[0]
 
-            # ✅ Fetch AI Explanation & Recommendation
-            gpt_explanation = result.get("gpt_explanation", "No AI explanation available.")
+        response = {
+            "model_version": "1.0.0",
+            "prediction": float(prediction)
+        }
 
-            # ✅ Display Results
-            st.markdown(f"<h2 style='text-align: center; color: red;'>Predicted Risk: {predicted_risk}</h2>", unsafe_allow_html=True)
-            st.markdown(f"<h3 style='text-align: center;'>🔎 PPI Validation: {validation['reliability']}</h3>", unsafe_allow_html=True)
-
-            # ✅ Show AI Explanation
-            if gpt_explanation and gpt_explanation != "GPT-4 explanation is currently unavailable.":
-                st.info(f"💡 **AI Explanation:**\n\n{gpt_explanation}")
-            else:
-                st.warning("⚠️ AI-generated explanation is not available.")
-
-        else:
-            st.error("⚠️ Unexpected response from the server.")
+        return jsonify(response)
 
     except Exception as e:
-        st.error(f"Error connecting to API: {e}")
+        logging.error(f"❌ Error during prediction: {e}")
+        return jsonify({"error": str(e)}), 500
 
-# ✅ Updated Footer
-st.markdown("---")
-st.markdown("🚀 Developed for **Jorge Luis Alonso** | **AI-Driven Agricultural Data Specialist**")
+# ✅ Health Check Route
+@app.route("/", methods=["GET"])
+def health_check():
+    return jsonify({"message": "API is running! Use /predict to make predictions."})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
