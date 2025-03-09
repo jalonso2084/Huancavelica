@@ -3,6 +3,7 @@ import joblib
 import numpy as np
 import logging
 import os
+from pydantic import BaseModel, ValidationError
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
@@ -14,17 +15,38 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 TEST_MODE = os.getenv("TESTING", "false").lower() in ["true", "1"]
 
 # ✅ Load the Random Forest model using joblib (more secure than pickle)
+MODEL_PATH = "random_forest_model.pkl"
 try:
     model_version = "1.0.0"
-    model = joblib.load("random_forest_model.pkl")
+    model = joblib.load(MODEL_PATH)
     logging.info(f"✅ Model version {model_version} loaded successfully.")
 except Exception as e:
-    logging.error(f"❌ Error loading model: {e}")
+    logging.error(f"❌ Error loading model from {MODEL_PATH}: {e}")
     model = None
 
 # ✅ Load OpenAI only if NOT in test mode
 if not TEST_MODE:
-    import openai
+    try:
+        import openai
+        if not os.getenv("OPENAI_API_KEY"):
+            raise ValueError("OpenAI API key is missing. Set OPENAI_API_KEY in environment.")
+    except Exception as e:
+        logging.error(f"❌ OpenAI import error: {e}")
+        openai = None
+
+# ✅ Define structured input validation using Pydantic
+class PredictionInput(BaseModel):
+    variety: int = 0
+    humidity: float = 0.0
+    weather_condition: int = 0
+    soil_type: int = 0
+    plant_health_index: int = 0
+    disease_pressure_index: int = 0
+    growth_stage: int = 0
+    canopy_coverage: int = 0
+    rainfall: int = 0
+    temperature_variability: int = 0
+    soil_moisture: int = 0
 
 # ✅ Root endpoint for health checks
 @app.route("/")
@@ -32,11 +54,10 @@ def home():
     logging.info("✅ Health check requested.")
     return jsonify({"message": "API is running! Use /predict to make predictions."})
 
-# ✅ Prediction endpoint (fixing feature size mismatch)
+# ✅ Prediction endpoint with improved validation and input names
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # ✅ Get input data
         data = request.get_json()
         logging.info(f"✅ Received data: {data}")
 
@@ -44,44 +65,21 @@ def predict():
             logging.warning("❌ No data received.")
             return jsonify({"error": "No input data provided"}), 400
 
-        # ✅ Expected 11 input fields (provide default values)
-        input_data = [
-            data.get("variety", 0),         # Default = 0
-            data.get("humidity", 0.0),       # Default = 0.0
-            data.get("weather", 0),          # Default = 0
-            data.get("soil", 0),             # Default = 0
-            data.get("feature_5", 0),        # Default = 0
-            data.get("feature_6", 0),        # Default = 0
-            data.get("feature_7", 0),        # Default = 0
-            data.get("feature_8", 0),        # Default = 0
-            data.get("feature_9", 0),        # Default = 0
-            data.get("feature_10", 0),       # Default = 0
-            data.get("feature_11", 0)        # Default = 0
-        ]
-
-        # ✅ Type conversion (int/float)
+        # ✅ Validate input using Pydantic
         try:
-            input_data = [
-                int(input_data[0]),  # variety
-                float(input_data[1]),  # humidity
-                int(input_data[2]),  # weather
-                int(input_data[3]),  # soil
-                int(input_data[4]), int(input_data[5]), int(input_data[6]),
-                int(input_data[7]), int(input_data[8]), int(input_data[9]),
-                int(input_data[10])
-            ]
-        except ValueError as e:
-            logging.error(f"❌ Type conversion error: {e}")
-            return jsonify({"error": f"Invalid input format: {e}"}), 400
+            input_data = PredictionInput(**data)
+        except ValidationError as e:
+            logging.error(f"❌ Input validation error: {e}")
+            return jsonify({"error": str(e)}), 400
+
+        # ✅ Convert input to numpy array
+        input_array = np.array([list(input_data.dict().values())])
+        logging.info(f"✅ Prepared input: {input_array}")
 
         # ✅ Check if model is loaded
         if model is None:
             logging.error("❌ Model not loaded.")
             return jsonify({"error": "Model not loaded"}), 500
-
-        # ✅ Convert input to numpy array
-        input_array = np.array([input_data])
-        logging.info(f"✅ Prepared input: {input_array}")
 
         # ✅ Make prediction
         prediction = model.predict(input_array)[0]
@@ -99,7 +97,7 @@ def predict():
         logging.error(f"❌ Error during prediction: {e}")
         return jsonify({"error": str(e)}), 500
 
-# ✅ OpenAI example endpoint (optional)
+# ✅ OpenAI explanation endpoint with better key handling
 @app.route("/explain", methods=["POST"])
 def explain():
     if TEST_MODE:
@@ -112,6 +110,10 @@ def explain():
             return jsonify({"error": "Missing 'query' field"}), 400
 
         query = data["query"]
+
+        if openai is None:
+            logging.error("❌ OpenAI is not available.")
+            return jsonify({"error": "OpenAI is not available"}), 500
 
         response = openai.ChatCompletion.create(
             model="gpt-4",
