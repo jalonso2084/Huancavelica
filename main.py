@@ -11,7 +11,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # ✅ Test mode flag to disable OpenAI during testing
-TEST_MODE = os.environ.get("TESTING", "False").lower() == "true"
+TEST_MODE = os.getenv("TESTING", "false").lower() in ["true", "1"]
 
 # ✅ Load the Random Forest model using joblib (more secure than pickle)
 try:
