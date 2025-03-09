@@ -10,6 +10,9 @@ app = Flask(__name__)
 # ✅ Set up logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
+# ✅ Test mode flag to disable OpenAI during testing
+TEST_MODE = os.environ.get("TESTING", "False").lower() == "true"
+
 # ✅ Load the Random Forest model using joblib (more secure than pickle)
 try:
     model_version = "1.0.0"
@@ -18,6 +21,10 @@ try:
 except Exception as e:
     logging.error(f"❌ Error loading model: {e}")
     model = None
+
+# ✅ Load OpenAI only if NOT in test mode
+if not TEST_MODE:
+    import openai
 
 # ✅ Root endpoint for health checks
 @app.route("/")
@@ -37,29 +44,22 @@ def predict():
             logging.warning("❌ No data received.")
             return jsonify({"error": "No input data provided"}), 400
 
-        # ✅ Expected 11 input fields
-        required_fields = [
-            "variety", "humidity", "weather", "soil",
-            "feature_5", "feature_6", "feature_7",
-            "feature_8", "feature_9", "feature_10", "feature_11"
-        ]
-        
-        # ✅ Provide default values for missing fields
+        # ✅ Expected 11 input fields (provide default values)
         input_data = [
-            data.get("variety", 0),
-            data.get("humidity", 0.0),
-            data.get("weather", 0),
-            data.get("soil", 0),
-            data.get("feature_5", 0),
-            data.get("feature_6", 0),
-            data.get("feature_7", 0),
-            data.get("feature_8", 0),
-            data.get("feature_9", 0),
-            data.get("feature_10", 0),
-            data.get("feature_11", 0)
+            data.get("variety", 0),         # Default = 0
+            data.get("humidity", 0.0),       # Default = 0.0
+            data.get("weather", 0),          # Default = 0
+            data.get("soil", 0),             # Default = 0
+            data.get("feature_5", 0),        # Default = 0
+            data.get("feature_6", 0),        # Default = 0
+            data.get("feature_7", 0),        # Default = 0
+            data.get("feature_8", 0),        # Default = 0
+            data.get("feature_9", 0),        # Default = 0
+            data.get("feature_10", 0),       # Default = 0
+            data.get("feature_11", 0)        # Default = 0
         ]
 
-        # ✅ Type validation
+        # ✅ Type conversion (int/float)
         try:
             input_data = [
                 int(input_data[0]),  # variety
@@ -79,7 +79,7 @@ def predict():
             logging.error("❌ Model not loaded.")
             return jsonify({"error": "Model not loaded"}), 500
 
-        # ✅ Convert input to numpy array (reshaped for scikit-learn)
+        # ✅ Convert input to numpy array
         input_array = np.array([input_data])
         logging.info(f"✅ Prepared input: {input_array}")
 
@@ -89,7 +89,7 @@ def predict():
 
         # ✅ Return prediction as JSON
         response = {
-            "prediction": float(prediction),  # Ensure float for JSON compatibility
+            "prediction": float(prediction),  # Ensure float format
             "model_version": model_version
         }
 
@@ -97,6 +97,32 @@ def predict():
 
     except Exception as e:
         logging.error(f"❌ Error during prediction: {e}")
+        return jsonify({"error": str(e)}), 500
+
+# ✅ OpenAI example endpoint (optional)
+@app.route("/explain", methods=["POST"])
+def explain():
+    if TEST_MODE:
+        logging.warning("✅ Skipping OpenAI during testing.")
+        return jsonify({"message": "Test mode is enabled — OpenAI disabled"}), 200
+
+    try:
+        data = request.get_json()
+        if not data or "query" not in data:
+            return jsonify({"error": "Missing 'query' field"}), 400
+
+        query = data["query"]
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": query}]
+        )
+
+        explanation = response["choices"][0]["message"]["content"]
+        return jsonify({"explanation": explanation})
+
+    except Exception as e:
+        logging.error(f"❌ Error during OpenAI request: {e}")
         return jsonify({"error": str(e)}), 500
 
 # ✅ Run Flask app on the Render-assigned port
