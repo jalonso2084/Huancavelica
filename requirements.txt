@@ -1,7 +1,7 @@
 # ======================================
 # ✅ Core Dependencies
 # ======================================
-numpy==2.2.3  # ✅ More stable and compatible version for Render
+numpy==1.23.5  # ✅ More stable and compatible version for Render
 pandas==1.5.3  # Data manipulation
 scipy==1.10.1  # Scientific computing
 
