@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 import logging
 
 # ✅ Setup logging
@@ -10,7 +11,13 @@ logger = logging.getLogger(__name__)
 # ✅ Load the model and metadata correctly
 try:
     model, metadata = joblib.load('random_forest_model.pkl')
+
+    # ✅ Type checking — ensure model is a RandomForestClassifier
+    if not isinstance(model, RandomForestClassifier):
+        raise TypeError(f"❌ Loaded object is type '{type(model)}' instead of RandomForestClassifier")
+
     logger.info(f"✅ Model version 1.0.0 loaded successfully.")
+
 except Exception as e:
     logger.error(f"❌ Error loading model: {e}")
     model = None
