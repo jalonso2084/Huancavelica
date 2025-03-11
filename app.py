@@ -1,70 +1,59 @@
 from flask import Flask, request, jsonify
 import joblib
-import numpy as np
-import logging
+import pandas as pd
+
+# ✅ Load the model and metadata correctly
+try:
+    model, metadata = joblib.load('random_forest_model.pkl')
+    print(f"✅ Model version 1.0.0 loaded successfully.")
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
+    model = None
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
 
-# ✅ Configure Logging
-logging.basicConfig(level=logging.INFO)
-
-# ✅ Load the model
-MODEL_PATH = "random_forest_model.pkl"
-try:
-    model = joblib.load(MODEL_PATH)
-    logging.info(f"✅ Model loaded: {type(model)}")
-    logging.info(f"Number of estimators: {model.n_estimators}")
-    logging.info(f"Max depth: {model.max_depth}")
-except Exception as e:
-    logging.error(f"❌ Error loading model: {e}")
-    model = None
-
-# ✅ Prediction Route
-@app.route("/predict", methods=["POST"])
+# ✅ Prediction Endpoint
+@app.route('/predict', methods=['POST'])
 def predict():
-    if model is None:
-        return jsonify({"error": "Model is not loaded."}), 500
-
-    data = request.get_json()
-    logging.info(f"✅ Received data: {data}")
-
     try:
-        input_data = [
-            data.get("variety", 0),
-            data.get("humidity", 0.0),
-            data.get("weather_condition", 0),
-            data.get("soil_type", 0),
-            data.get("plant_health_index", 0),
-            data.get("disease_pressure_index", 0),
-            data.get("growth_stage", 0),
-            data.get("canopy_coverage", 0),
-            data.get("rainfall", 0),
-            data.get("temperature_variability", 0),
-            data.get("soil_moisture", 0)
-        ]
+        # ✅ Read input data from request
+        data = request.get_json()
 
-        input_array = np.array([input_data])
-        prediction = model.predict(input_array)[0]
-
-        response = {
-            "model_version": "1.0.0",
-            "prediction": float(prediction)
-        }
-
-        return jsonify(response)
-
+        # ✅ Convert input to DataFrame using metadata feature names
+        features = pd.DataFrame([[
+            data['variety'], data['humidity'], data['weather_condition'],
+            data['soil_type'], data['plant_health_index'], data['disease_pressure_index'],
+            data['growth_stage'], data['canopy_coverage'], data['rainfall'],
+            data['temperature_variability'], data['soil_moisture']
+        ]], columns=metadata['features'])
+        
+        # ✅ Generate prediction
+        prediction = model.predict(features)[0]
+        prediction_label = "High Risk" if prediction == 1 else "Low Risk"
+        
+        return jsonify({'prediction': prediction_label})
+    
     except Exception as e:
-        logging.error(f"❌ Error during prediction: {e}")
-        return jsonify({"error": str(e)}), 500
+        # ✅ Return clear error message if prediction fails
+        return jsonify({'error': str(e)}), 400
 
-# ✅ Health Check Route
-@app.route("/", methods=["GET"])
-def health_check():
-    return jsonify({"message": "API is running! Use /predict to make predictions."})
+# ✅ Health Check Endpoint
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "OK", "model_loaded": model is not None})
 
-    if __name__ == "__main__":
+# ✅ Expose Flask app to Waitress
+if __name__ == "__main__":
+    from waitress import serve
     import os
+    
+    # ✅ Bind to dynamic port for Render compatibility
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    print(f"✅ Starting server on port {port}...")
+    
+    # ✅ Start the app using Waitress
+    serve(app, host="0.0.0.0", port=port)
 
+# ✅ Make sure 'app' is exposed for Waitress
+application = app
