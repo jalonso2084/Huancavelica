@@ -1,91 +1,61 @@
 from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-import logging
 
-# ✅ Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# ✅ Load the model and metadata correctly
+try:
+    model, metadata = joblib.load('random_forest_model.pkl')
+    print(f"✅ Model version 1.0.0 loaded successfully.")
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
+    model = None
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
 
-# ✅ Load the model and metadata correctly
-try:
-    # Explicitly unpack the tuple to avoid conflicts
-    loaded = joblib.load('random_forest_model.pkl')
-    
-    if isinstance(loaded, tuple) and len(loaded) == 2:
-        model, metadata = loaded
-        if not isinstance(model, RandomForestClassifier):
-            raise TypeError(f"❌ Loaded object is type '{type(model)}' instead of RandomForestClassifier")
-
-        logger.info(f"✅ Model version 1.0.0 loaded successfully.")
-    else:
-        raise TypeError("❌ Model file does not contain expected tuple (model, metadata)")
-
-except Exception as e:
-    logger.error(f"❌ Error loading model: {e}")
-    model = None
-    metadata = None
-
-# ✅ Required keys for input validation
-REQUIRED_KEYS = [
-    'variety', 'humidity', 'weather_condition', 'soil_type', 
-    'plant_health_index', 'disease_pressure_index', 'growth_stage',
-    'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture'
-]
-
+# ✅ Prediction Endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # ✅ Read input data from request
         data = request.get_json()
+        print(f"📥 Received input: {data}")  # ✅ Log input for debugging
 
-        # ✅ Validate input data
-        if not all(key in data for key in REQUIRED_KEYS):
-            logger.warning("❌ Missing required input data")
-            return jsonify({'error': 'Missing required input data'}), 400
-        
-        # ✅ Validate feature order consistency with metadata
-        if list(metadata['features']) != REQUIRED_KEYS:
-            logger.error("❌ Feature order mismatch in metadata")
-            return jsonify({'error': 'Feature order mismatch in metadata'}), 500
+        # ✅ Ensure all keys are present
+        required_keys = metadata['features']
+        missing_keys = [key for key in required_keys if key not in data]
+
+        if missing_keys:
+            return jsonify({'error': f'Missing keys: {missing_keys}'}), 400
 
         # ✅ Convert input to DataFrame using metadata feature names
-        features = pd.DataFrame([[
-            data['variety'], data['humidity'], data['weather_condition'],
-            data['soil_type'], data['plant_health_index'], data['disease_pressure_index'],
-            data['growth_stage'], data['canopy_coverage'], data['rainfall'],
-            data['temperature_variability'], data['soil_moisture']
-        ]], columns=metadata['features'])
+        features = pd.DataFrame([[data[key] for key in required_keys]], columns=required_keys)
 
         # ✅ Generate prediction
         prediction = model.predict(features)[0]
         prediction_label = "High Risk" if prediction == 1 else "Low Risk"
-        logger.info(f"✅ Prediction: {prediction_label}")
-
+        
         return jsonify({'prediction': prediction_label})
     
     except Exception as e:
-        logger.error(f"❌ Error during prediction: {e}")
+        # ✅ Return clear error message if prediction fails
+        print(f"❌ Prediction error: {e}")
         return jsonify({'error': str(e)}), 400
 
 # ✅ Health Check Endpoint
 @app.route('/health', methods=['GET'])
 def health():
-    status = {"status": "OK", "model_loaded": model is not None}
-    logger.info(f"✅ Health Check: {status}")
-    return jsonify(status)
+    return jsonify({"status": "OK", "model_loaded": model is not None})
 
 # ✅ Expose Flask app to Waitress
 if __name__ == "__main__":
     from waitress import serve
     import os
     
-    port = int(os.environ.get("PORT", 5000))
-    logger.info(f"✅ Starting server on port {port}...")
+    # ✅ Bind to dynamic port for Render compatibility
+    port = int(os.environ.get("PORT", 10000))
+    print(f"✅ Starting server on port {port}...")
+
+    # ✅ Start the app using Waitress
     serve(app, host="0.0.0.0", port=port)
 
-# ✅ Ensure app is exposed for Waitress
-application = app
