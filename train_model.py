@@ -38,12 +38,10 @@ sample_prediction = model.predict(sample_input)[0]
 prediction_label = "High Risk" if sample_prediction == 1 else "Low Risk"
 print(f"✅ Sample Prediction: {prediction_label}")
 
-# ✅ Save the trained model separately from metadata
+# ✅ Save the trained model + metadata as a tuple (BEST PRACTICE)
 model_path = os.path.join(os.getcwd(), 'random_forest_model.pkl')
-metadata_path = os.path.join(os.getcwd(), 'metadata.pkl')
 
-joblib.dump(model, model_path)
-joblib.dump({'features': FEATURE_COLUMNS}, metadata_path)
+# ✅ Save model + metadata together
+joblib.dump((model, {'features': FEATURE_COLUMNS}), model_path)
 
-print(f"✅ Model saved to {model_path}")
-print(f"✅ Metadata saved to {metadata_path}")
+print(f"✅ Model and metadata saved to {model_path}")
