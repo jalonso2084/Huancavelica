@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 
-# ✅ Load the model and metadata correctly
+# ✅ Load model, metadata, and label encoders
 try:
-    model, metadata = joblib.load('random_forest_model.pkl')
+    model = joblib.load('random_forest_model.pkl')
+    metadata = joblib.load('metadata.pkl')
+    label_encoders = joblib.load('label_encoders.pkl')  # ✅ Load encoders
     print(f"✅ Model version 1.0.0 loaded successfully.")
 except Exception as e:
     print(f"❌ Error loading model: {e}")
@@ -17,29 +19,35 @@ app = Flask(__name__)
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # ✅ Read input data from request
+        # ✅ Log incoming request data
         data = request.get_json()
-        print(f"📥 Received input: {data}")  # ✅ Log input for debugging
+        app.logger.info(f"Incoming request data: {data}")
 
-        # ✅ Ensure all keys are present
+        # ✅ Ensure all required keys are present
         required_keys = metadata['features']
-        missing_keys = [key for key in required_keys if key not in data]
-
-        if missing_keys:
+        if not all(key in data for key in required_keys):
+            missing_keys = [key for key in required_keys if key not in data]
+            app.logger.error(f"❌ Missing keys: {missing_keys}")
             return jsonify({'error': f'Missing keys: {missing_keys}'}), 400
+        
+        # ✅ Convert categorical inputs using LabelEncoder
+        for key in label_encoders:
+            if key in data:
+                data[key] = label_encoders[key].transform([data[key]])[0]
 
-        # ✅ Convert input to DataFrame using metadata feature names
+        # ✅ Convert input to DataFrame
         features = pd.DataFrame([[data[key] for key in required_keys]], columns=required_keys)
+        app.logger.info(f"Processed features: {features}")
 
         # ✅ Generate prediction
         prediction = model.predict(features)[0]
         prediction_label = "High Risk" if prediction == 1 else "Low Risk"
-        
+
+        app.logger.info(f"Generated prediction: {prediction_label}")
         return jsonify({'prediction': prediction_label})
     
     except Exception as e:
-        # ✅ Return clear error message if prediction fails
-        print(f"❌ Prediction error: {e}")
+        app.logger.error(f"❌ Error during prediction: {str(e)}")
         return jsonify({'error': str(e)}), 400
 
 # ✅ Health Check Endpoint
@@ -52,10 +60,6 @@ if __name__ == "__main__":
     from waitress import serve
     import os
     
-    # ✅ Bind to dynamic port for Render compatibility
-    port = int(os.environ.get("PORT", 10000))
-    print(f"✅ Starting server on port {port}...")
-
-    # ✅ Start the app using Waitress
+    port = int(os.environ.get("PORT", 5000))
+    app.logger.info(f"✅ Starting server on port {port}...")
     serve(app, host="0.0.0.0", port=port)
-
