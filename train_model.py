@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 import os
 
-# ✅ Load training data (replace 'data.csv' with your actual data file)
+# ✅ Load training data (replace 'training_data.csv' with your actual data file)
 data = pd.read_csv('training_data.csv')
 
 # ✅ Define feature columns (match the API input)
@@ -38,7 +38,12 @@ sample_prediction = model.predict(sample_input)[0]
 prediction_label = "High Risk" if sample_prediction == 1 else "Low Risk"
 print(f"✅ Sample Prediction: {prediction_label}")
 
-# ✅ Save the trained model and metadata together as a tuple
+# ✅ Save the trained model separately from metadata
 model_path = os.path.join(os.getcwd(), 'random_forest_model.pkl')
-joblib.dump((model, {'features': FEATURE_COLUMNS}), model_path)
-print(f"✅ Model and metadata saved to {model_path}")
+metadata_path = os.path.join(os.getcwd(), 'metadata.pkl')
+
+joblib.dump(model, model_path)
+joblib.dump({'features': FEATURE_COLUMNS}, metadata_path)
+
+print(f"✅ Model saved to {model_path}")
+print(f"✅ Metadata saved to {metadata_path}")
