@@ -1,5 +1,3 @@
-# train_model.py
-
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -38,3 +36,4 @@ print("✅ Model training complete!")
 model_path = os.path.join(os.getcwd(), 'random_forest_model.pkl')
 joblib.dump(model, model_path)
 print(f"✅ Model saved to {model_path}")
+
