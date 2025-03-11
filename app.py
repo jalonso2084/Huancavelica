@@ -2,15 +2,18 @@ from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 
-# ✅ Load model, metadata, and label encoders
+# ✅ Load model and metadata globally
 try:
     model = joblib.load('random_forest_model.pkl')
-    metadata = joblib.load('metadata.pkl')
-    label_encoders = joblib.load('label_encoders.pkl')  # ✅ Load encoders
+    metadata = joblib.load('metadata.pkl')  # ✅ Load metadata as global
+    label_encoders = joblib.load('label_encoders.pkl')  # ✅ Load label encoders
     print(f"✅ Model version 1.0.0 loaded successfully.")
+    print(f"✅ Metadata: {metadata}")  # ✅ Confirm metadata is loaded correctly
 except Exception as e:
     print(f"❌ Error loading model: {e}")
     model = None
+    metadata = None
+    label_encoders = None
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
