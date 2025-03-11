@@ -8,22 +8,27 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ✅ Initialize Flask app
+app = Flask(__name__)
+
 # ✅ Load the model and metadata correctly
 try:
-    model, metadata = joblib.load('random_forest_model.pkl')
+    # Explicitly unpack the tuple to avoid conflicts
+    loaded = joblib.load('random_forest_model.pkl')
+    
+    if isinstance(loaded, tuple) and len(loaded) == 2:
+        model, metadata = loaded
+        if not isinstance(model, RandomForestClassifier):
+            raise TypeError(f"❌ Loaded object is type '{type(model)}' instead of RandomForestClassifier")
 
-    # ✅ Type checking — ensure model is a RandomForestClassifier
-    if not isinstance(model, RandomForestClassifier):
-        raise TypeError(f"❌ Loaded object is type '{type(model)}' instead of RandomForestClassifier")
-
-    logger.info(f"✅ Model version 1.0.0 loaded successfully.")
+        logger.info(f"✅ Model version 1.0.0 loaded successfully.")
+    else:
+        raise TypeError("❌ Model file does not contain expected tuple (model, metadata)")
 
 except Exception as e:
     logger.error(f"❌ Error loading model: {e}")
     model = None
-
-# ✅ Initialize Flask app
-app = Flask(__name__)
+    metadata = None
 
 # ✅ Required keys for input validation
 REQUIRED_KEYS = [
