@@ -1,0 +1,6 @@
+INIA-303 Canchan: A popular commercial variety known for its high yield and moderate late blight resistance.
+INIA-302 Amarilis: Characterized by high productivity, Amarilis is moderately susceptible to late blight.
+INIA-321 Kawsay: Developed for its high tolerance to disease and good market acceptance.
+Yungay: A widely cultivated variety in Peru with good resistance to drought but moderate susceptibility to late blight.
+Poccoya: Native to Huancavelica, highly resistant to late blight and cold conditions.
+CIP-Matilde: Experimental variety developed by CIP, showing promising resistance to late blight.

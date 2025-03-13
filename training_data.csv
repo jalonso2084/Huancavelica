@@ -1,3 +1,7 @@
 variety,humidity,weather_condition,soil_type,plant_health_index,disease_pressure_index,growth_stage,canopy_coverage,rainfall,temperature_variability,soil_moisture,blight_risk
-2,95,1,4,5,2,3,1,20,5,8,1
-1,85,2,3,4,1,2,0,15,3,7,0
+INIA-303 Canchan,75,Rain,Loamy,0.85,0.6,Vegetative,0.8,120,12,0.4,1
+INIA-302 Amarilis,70,Cloudy,Sandy,0.82,0.7,Flowering,0.7,110,10,0.35,1
+INIA-321 Kawsay,80,Rain,Clay,0.88,0.5,Vegetative,0.85,130,15,0.45,0
+Yungay,65,Sunny,Loamy,0.78,0.65,Flowering,0.75,100,8,0.3,1
+Poccoya,85,Rain,Silty,0.9,0.4,Maturity,0.9,140,10,0.5,0
+CIP-Matilde,78,Cloudy,Loamy,0.83,0.55,Vegetative,0.82,115,11,0.38,0

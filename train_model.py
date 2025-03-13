@@ -1,47 +1,55 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import OneHotEncoder
 import joblib
 import os
 
-# ✅ Load training data (replace 'training_data.csv' with your actual data file)
+# ✅ Load training data
 data = pd.read_csv('training_data.csv')
 
-# ✅ Define feature columns (match the API input)
+# ✅ Define feature columns
 FEATURE_COLUMNS = [
     'variety', 'humidity', 'weather_condition', 'soil_type', 
     'plant_health_index', 'disease_pressure_index', 'growth_stage',
     'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture'
 ]
 
-# ✅ Define target column (update this based on your dataset)
+# ✅ Define target column
 TARGET_COLUMN = 'blight_risk'
 
 # ✅ Prepare input and target data
 X = data[FEATURE_COLUMNS]
 y = data[TARGET_COLUMN]
 
+# ✅ One-hot encode categorical columns
+encoder = OneHotEncoder(sparse_output=False, drop='first', handle_unknown='ignore')
+X_encoded = encoder.fit_transform(X[['variety', 'weather_condition', 'soil_type', 'growth_stage']])
+X_encoded = np.concatenate([X_encoded, X[['humidity', 'plant_health_index', 'disease_pressure_index', 'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture']].values], axis=1)
+
 # ✅ Initialize and train the model
 model = RandomForestClassifier(
-    n_estimators=100,  # Number of trees
-    max_depth=None,     # No limit on depth
-    random_state=42     # Seed for reproducibility
+    n_estimators=100, 
+    max_depth=None, 
+    random_state=42
 )
 
 print("✅ Training model...")
-model.fit(X, y)
+model.fit(X_encoded, y)
 print("✅ Model training complete!")
 
-# ✅ Generate a sample prediction to test it locally
-sample_input = X.iloc[[0]]
-sample_prediction = model.predict(sample_input)[0]
-prediction_label = "High Risk" if sample_prediction == 1 else "Low Risk"
-print(f"✅ Sample Prediction: {prediction_label}")
-
-# ✅ Save the trained model and metadata **as a tuple**
+# ✅ Save the trained model and metadata in the same folder
 model_path = os.path.join(os.getcwd(), 'random_forest_model.pkl')
+metadata_path = os.path.join(os.getcwd(), 'metadata.pkl')
 
-# ✅ Include metadata directly in the model file
-joblib.dump((model, {'features': FEATURE_COLUMNS}), model_path)
+# ✅ Create metadata (feature names)
+metadata = {
+    'features': encoder.get_feature_names_out(['variety', 'weather_condition', 'soil_type', 'growth_stage']).tolist() +
+                ['humidity', 'plant_health_index', 'disease_pressure_index', 'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture']
+}
 
-print(f"✅ Model and metadata saved to {model_path}")
+joblib.dump(model, model_path)
+joblib.dump(metadata, metadata_path)
+
+print(f"✅ Model saved to {model_path}")
+print(f"✅ Metadata saved to {metadata_path}")
