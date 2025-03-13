@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import LabelEncoder
 import joblib
 import os
 
@@ -22,15 +21,6 @@ TARGET_COLUMN = 'blight_risk'
 X = data[FEATURE_COLUMNS]
 y = data[TARGET_COLUMN]
 
-# ✅ Encode categorical variables using LabelEncoder
-categorical_columns = ['variety', 'weather_condition', 'soil_type', 'growth_stage']
-label_encoders = {}
-
-for col in categorical_columns:
-    le = LabelEncoder()
-    X[col] = le.fit_transform(X[col])  # ✅ Convert strings to numeric codes
-    label_encoders[col] = le
-
 # ✅ Initialize and train the model
 model = RandomForestClassifier(
     n_estimators=100,  # Number of trees
@@ -48,15 +38,10 @@ sample_prediction = model.predict(sample_input)[0]
 prediction_label = "High Risk" if sample_prediction == 1 else "Low Risk"
 print(f"✅ Sample Prediction: {prediction_label}")
 
-# ✅ Save the trained model + metadata + label encoders
+# ✅ Save the trained model and metadata **as a tuple**
 model_path = os.path.join(os.getcwd(), 'random_forest_model.pkl')
-metadata_path = os.path.join(os.getcwd(), 'metadata.pkl')
-label_encoder_path = os.path.join(os.getcwd(), 'label_encoders.pkl')
 
-joblib.dump(model, model_path)
-joblib.dump({'features': FEATURE_COLUMNS}, metadata_path)
-joblib.dump(label_encoders, label_encoder_path)  # ✅ Save label encoders
+# ✅ Include metadata directly in the model file
+joblib.dump((model, {'features': FEATURE_COLUMNS}), model_path)
 
-print(f"✅ Model saved to {model_path}")
-print(f"✅ Metadata saved to {metadata_path}")
-print(f"✅ Label encoders saved to {label_encoder_path}")
+print(f"✅ Model and metadata saved to {model_path}")

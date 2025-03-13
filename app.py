@@ -8,8 +8,7 @@ logging.basicConfig(level=logging.INFO)
 
 # ✅ Load model and metadata with error handling
 try:
-    model = joblib.load('random_forest_model.pkl')
-    metadata = joblib.load('metadata.pkl')
+    model, metadata = joblib.load('random_forest_model.pkl')  # Load both from one file
     logging.info(f"✅ Model version 1.0.0 loaded successfully.")
     logging.info(f"✅ Metadata loaded: {metadata}")  # Confirm metadata is loaded
 except Exception as e:
@@ -78,4 +77,3 @@ if __name__ == "__main__":
     
     # ✅ Start the app using Waitress
     serve(app, host="0.0.0.0", port=port)
-
