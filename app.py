@@ -1,37 +1,81 @@
+import logging
+from flask import Flask, request, jsonify
+import joblib
+import pandas as pd
+
+# ✅ Initialize logging for better debugging
+logging.basicConfig(level=logging.INFO)
+
+# ✅ Load model and metadata with error handling
+try:
+    model = joblib.load('random_forest_model.pkl')
+    metadata = joblib.load('metadata.pkl')
+    logging.info(f"✅ Model version 1.0.0 loaded successfully.")
+    logging.info(f"✅ Metadata loaded: {metadata}")  # Confirm metadata is loaded
+except Exception as e:
+    logging.error(f"❌ Error loading model or metadata: {e}")
+    model = None
+    metadata = None
+
+# ✅ Initialize Flask app
+app = Flask(__name__)
+
+# ✅ Prediction Endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # ✅ Check for valid JSON input
+        # ✅ Read input data from request
         data = request.get_json()
         if data is None:
-            app.logger.error("❌ Error: request.get_json() returned None. Invalid or missing JSON data.")
-            return jsonify({'error': 'Invalid or missing JSON data'}), 400
-        
-        app.logger.info(f"✅ Received JSON data: {data}")
+            logging.error("❌ Error: request.get_json() returned None")
+            return jsonify({'error': 'Invalid JSON data in request'}), 400
 
-        # ✅ Ensure all required keys are present
-        required_keys = metadata['features']
-        missing_keys = [key for key in required_keys if key not in data]
-        if missing_keys:
-            app.logger.error(f"❌ Missing keys: {missing_keys}")
-            return jsonify({'error': f'Missing keys: {missing_keys}'}), 400
-        
-        # ✅ Convert categorical inputs using LabelEncoder (if used)
-        for key in label_encoders:
-            if key in data:
-                data[key] = label_encoders[key].transform([data[key]])[0]
+        logging.info(f"✅ Received JSON data: {data}")
 
-        # ✅ Convert input to DataFrame
-        features = pd.DataFrame([[data[key] for key in required_keys]], columns=required_keys)
-        app.logger.info(f"✅ Processed features: {features}")
+        # ✅ Confirm metadata is available
+        if metadata is None:
+            logging.error("❌ Metadata is not available.")
+            return jsonify({'error': 'Metadata is not available'}), 500
+        
+        # ✅ Convert input to DataFrame using metadata feature names
+        try:
+            features = pd.DataFrame([[
+                data['variety'], data['humidity'], data['weather_condition'],
+                data['soil_type'], data['plant_health_index'], data['disease_pressure_index'],
+                data['growth_stage'], data['canopy_coverage'], data['rainfall'],
+                data['temperature_variability'], data['soil_moisture']
+            ]], columns=metadata['features'])
+        except KeyError as e:
+            logging.error(f"❌ Missing key in request data: {e}")
+            return jsonify({'error': f"Missing key in request data: {e}"}), 400
 
         # ✅ Generate prediction
         prediction = model.predict(features)[0]
         prediction_label = "High Risk" if prediction == 1 else "Low Risk"
 
-        app.logger.info(f"✅ Generated prediction: {prediction_label}")
+        logging.info(f"✅ Generated prediction: {prediction_label}")
+
         return jsonify({'prediction': prediction_label})
 
     except Exception as e:
-        app.logger.error(f"❌ Error during prediction: {str(e)}")
+        logging.error(f"❌ Error during prediction: {e}")
         return jsonify({'error': str(e)}), 400
+
+# ✅ Health Check Endpoint
+@app.route('/health', methods=['GET'])
+def health():
+    status = model is not None and metadata is not None
+    return jsonify({"status": "OK" if status else "Error", "model_loaded": status})
+
+# ✅ Expose Flask app to Waitress
+if __name__ == "__main__":
+    from waitress import serve
+    import os
+    
+    # ✅ Bind to dynamic port for Render compatibility
+    port = int(os.environ.get("PORT", 10000))
+    logging.info(f"✅ Starting server on port {port}...")
+    
+    # ✅ Start the app using Waitress
+    serve(app, host="0.0.0.0", port=port)
+
