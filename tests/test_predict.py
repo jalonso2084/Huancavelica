@@ -30,7 +30,7 @@ def test_predict_sample_data(tmp_path):
         [70, 12, 110, 0.82, 0.65, 0.85, 0.4, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0]
     ]
 
-    # ✅ Create DataFrame using expected column order
+    # ✅ Create DataFrame using the **exact feature order** from metadata
     df = pd.DataFrame(sample_data, columns=EXPECTED_FEATURES)
 
     # ✅ Create input file in temp directory
