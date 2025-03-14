@@ -1,5 +1,6 @@
 import sys
 import os
+import joblib
 
 # Ensure Python can find the scripts directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -14,18 +15,27 @@ except ModuleNotFoundError as e:
 import pytest
 import pandas as pd
 
+# ✅ Load expected feature order from metadata.pkl
+metadata_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'metadata.pkl'))
+with open(metadata_path, 'rb') as f:
+    metadata = joblib.load(f)
+    EXPECTED_FEATURES = metadata['features']
+
 def test_predict_sample_data(tmp_path):
     """Test predict.py with a sample input CSV"""
 
-    # ✅ Updated sample input to match new format
-    sample_data = """humidity,temperature_variability,rainfall,plant_health_index,disease_pressure_index,canopy_coverage,soil_moisture,variety_INIA-302 Amarilis,variety_INIA-303 Canchan,variety_INIA-321 Kawsay,variety_Poccoya,variety_Yungay,weather_condition_Rain,weather_condition_Sunny,soil_type_Loamy,soil_type_Sandy,soil_type_Silty,growth_stage_Maturity,growth_stage_Vegetative
-78,15,120,0.85,0.7,0.9,0.3,1,0,0,0,0,1,0,1,0,0,0,1
-70,12,110,0.82,0.65,0.85,0.4,0,1,0,0,0,0,1,0,1,0,1,0
-"""
+    # ✅ Updated sample input to match new format and order
+    sample_data = [
+        [78, 15, 120, 0.85, 0.7, 0.9, 0.3, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+        [70, 12, 110, 0.82, 0.65, 0.85, 0.4, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0]
+    ]
+
+    # ✅ Create DataFrame using expected column order
+    df = pd.DataFrame(sample_data, columns=EXPECTED_FEATURES)
 
     # ✅ Create input file in temp directory
     input_file = tmp_path / "sample_input.csv"
-    input_file.write_text(sample_data)
+    df.to_csv(input_file, index=False)
 
     # ✅ Define output file path
     output_file = tmp_path / "predictions.csv"
