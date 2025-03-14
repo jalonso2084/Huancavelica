@@ -10,8 +10,8 @@ logging.basicConfig(level=logging.INFO)
 try:
     model = joblib.load('random_forest_model.pkl')
     metadata = joblib.load('metadata.pkl')
-    encoder = metadata['encoder']  # ✅ Load encoder!
     logging.info(f"✅ Model and metadata loaded successfully")
+    logging.info(f"✅ Expected features: {metadata['features']}")
 except Exception as e:
     logging.error(f"❌ Error loading model or metadata: {e}")
     model, metadata = None, None
@@ -30,28 +30,39 @@ def predict():
 
         logging.info(f"✅ Received data: {data}")
 
-        # ✅ Create DataFrame with input
-        input_df = pd.DataFrame([[
-            data['variety'], data['humidity'], data['weather_condition'],
-            data['soil_type'], data['plant_health_index'], data['disease_pressure_index'],
-            data['growth_stage'], data['canopy_coverage'], data['rainfall'],
-            data['temperature_variability'], data['soil_moisture']
-        ]], columns=['variety', 'humidity', 'weather_condition', 'soil_type', 
-                     'plant_health_index', 'disease_pressure_index', 'growth_stage',
-                     'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture'])
+        # ✅ Convert to DataFrame
+        input_data = pd.DataFrame([[
+            data.get('variety', None), 
+            data.get('humidity', None),
+            data.get('weather_condition', None),
+            data.get('soil_type', None),
+            data.get('plant_health_index', None),
+            data.get('disease_pressure_index', None),
+            data.get('growth_stage', None),
+            data.get('canopy_coverage', None),
+            data.get('rainfall', None),
+            data.get('temperature_variability', None),
+            data.get('soil_moisture', None)
+        ]], columns=[
+            'variety', 'humidity', 'weather_condition', 'soil_type', 
+            'plant_health_index', 'disease_pressure_index', 'growth_stage',
+            'canopy_coverage', 'rainfall', 'temperature_variability', 'soil_moisture'
+        ])
 
-        # ✅ Apply OneHotEncoder to match training format
-        encoded = encoder.transform(input_df[['variety', 'weather_condition', 'soil_type', 'growth_stage']])
-        encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(['variety', 'weather_condition', 'soil_type', 'growth_stage']))
-        numeric_df = input_df.drop(columns=['variety', 'weather_condition', 'soil_type', 'growth_stage']).reset_index(drop=True)
+        # ✅ Apply One-Hot Encoding to match model input
+        input_encoded = pd.get_dummies(input_data)
+        logging.info(f"✅ Encoded input columns: {list(input_encoded.columns)}")
 
-        # ✅ Combine encoded + numeric data
-        final_input = pd.concat([encoded_df, numeric_df], axis=1)
+        # ✅ Add missing columns and fill with zeros
+        for col in metadata['features']:
+            if col not in input_encoded.columns:
+                input_encoded[col] = 0
+        input_encoded = input_encoded[metadata['features']]
 
-        # ✅ Match training features
-        final_input = final_input.reindex(columns=metadata['features'], fill_value=0)
+        logging.info(f"✅ Final input data for model: \n{input_encoded}")
 
-        prediction = model.predict(final_input)[0]
+        # ✅ Generate prediction
+        prediction = model.predict(input_encoded)[0]
         prediction_label = "High Risk" if prediction == 1 else "Low Risk"
 
         logging.info(f"✅ Prediction result: {prediction_label}")
