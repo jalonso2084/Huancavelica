@@ -17,25 +17,30 @@ import pandas as pd
 def test_predict_sample_data(tmp_path):
     """Test predict.py with a sample input CSV"""
 
-    # Create a temporary input file
-    sample_data = """Latitude_left,Longitude_left,Types of Potatoes Grown,Region/Country,Criteria for Selection,Farming Practices,pH_left,Bulk_Density_left,Organic_Carbon_left,CEC_left,Clay_Content_left,Sand_Content_left,Silt_Content_left,Climatic_Climate Variability,Climatic_Moderate El Niño, Increased Humidity,Climatic_Weak-Moderate El Niño, Excessive Rainfall,Fungicide Applications (Proxy for Severity)
-    -13.8,-75.5,2,Peru,1,Traditional,5.6,1.2,2.1,15.3,20.5,50.2,29.3,0,0,1,4
-    -13.8,-75.5,2,Peru,1,Traditional,5.6,1.2,2.1,15.3,20.5,50.2,29.3,0,0,1,1"""
+    # ✅ Updated sample input to match new format
+    sample_data = """humidity,temperature_variability,rainfall,plant_health_index,disease_pressure_index,canopy_coverage,soil_moisture,variety_INIA-302 Amarilis,variety_INIA-303 Canchan,variety_INIA-321 Kawsay,variety_Poccoya,variety_Yungay,weather_condition_Rain,weather_condition_Sunny,soil_type_Loamy,soil_type_Sandy,soil_type_Silty,growth_stage_Maturity,growth_stage_Vegetative
+78,15,120,0.85,0.7,0.9,0.3,1,0,0,0,0,1,0,1,0,0,0,1
+70,12,110,0.82,0.65,0.85,0.4,0,1,0,0,0,0,1,0,1,0,1,0
+"""
 
+    # ✅ Create input file in temp directory
     input_file = tmp_path / "sample_input.csv"
     input_file.write_text(sample_data)
 
-    # Define output file path
+    # ✅ Define output file path
     output_file = tmp_path / "predictions.csv"
 
-    # Run prediction
+    # ✅ Run prediction
     try:
         predict(str(input_file), str(output_file))
-        assert output_file.exists(), "❌ Prediction output file was not created!"
         
-        # Load predictions
+        # ✅ Ensure output file was created
+        assert output_file.exists(), "❌ Prediction output file was not created!"
+
+        # ✅ Load predictions and check the structure
         df = pd.read_csv(output_file)
         assert "Predicted_Disease_Risk" in df.columns, "❌ Predictions column missing!"
         assert len(df) == 2, "❌ Prediction output has incorrect number of rows!"
+    
     except Exception as e:
         pytest.fail(f"❌ Prediction test failed: {e}")
