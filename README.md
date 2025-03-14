@@ -79,7 +79,7 @@ pip install -r requirements.txt
 ## 🚀 **Deployment Details**
 
 This project is deployed on **Render**:
-1. Go to [Render Dashboard](https://dashboard.render.com).
+1. Go to [Render Dashboard](https://huancavelica.onrender.com).
 2. Create a new service.
 3. Connect your GitHub repository.
 4. Set the build command to:
