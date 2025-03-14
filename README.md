@@ -26,7 +26,7 @@ Example weather and soil data in CSV format for easy testing.
 ## 📊 Model Workflow
 The following diagram illustrates how weather, soil, and farming data are processed to generate late blight risk predictions:
 
-![Workflow Diagram](./docs/workflow_diagram.png)
+![Workflow Diagram](https://github.com/jalonso2084/Huancavelica/blob/main/definitiva.jpg)
 
 1. Input data (weather, soil, farming practices)
 2. Model processes data using pre-trained Random Forest
