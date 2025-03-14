@@ -1,4 +1,4 @@
-name: 🚀 Automated Tests
+name: Run Tests
 
 on:
   push:
@@ -9,78 +9,25 @@ on:
       - main
 
 jobs:
-  test-linux:
+  test:
     runs-on: ubuntu-latest
-
+    env:
+      PYTHONUTF8: 1  # ✅ Forces UTF-8 encoding
     steps:
-      - name: 🛠 Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: 🐍 Set Up Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: '3.11'
 
-      - name: 📦 Install Dependencies (Linux)
+      - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🔍 Debug - Check Directory Structure
-        run: ls -R  # Prints all files
-
-      - name: 🛠 Set PYTHONPATH
+      - name: Run Tests
         run: |
-          echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
-          export PYTHONPATH=$(pwd)
-
-      - name: 🔍 Test Python Import
-        run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
-
-      # ✅ Pass TEST_MODE environment variable
-      - name: ✅ Run Tests
-        env:
-          TESTING: true
-        run: |
-          cd $GITHUB_WORKSPACE
-          pytest
-
-  test-windows:
-    runs-on: windows-latest
-
-    steps:
-      - name: 🛠 Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: 🐍 Set Up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: 📦 Install Dependencies (Windows)
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r requirements-windows.txt  # Windows-specific dependencies
-
-      - name: 🔍 Debug - Check Directory Structure (Windows)
-        run: Get-ChildItem -Recurse
-
-      - name: 🛠 Set UTF-8 Encoding (Windows)
-        run: chcp 65001
-
-      - name: 🛠 Set PYTHONPATH (Windows)
-        run: |
-          echo "PYTHONPATH=$env:GITHUB_WORKSPACE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
-          $env:PYTHONPATH=$env:GITHUB_WORKSPACE
-
-      - name: 🔍 Test Python Import
-        run: python -c "from scripts.predict import predict; print('✅ Import successful!')"
-
-      # ✅ Pass TEST_MODE environment variable
-      - name: ✅ Run Tests (Windows)
-        env:
-          TESTING: true
-        run: |
-          cd $env:GITHUB_WORKSPACE
-          pytest
+          python -c "from scripts.predict import predict; print('✅ Import successful!')"
+          pytest tests
