@@ -24,10 +24,10 @@ with open(metadata_path, 'rb') as f:
 def test_predict_sample_data(tmp_path):
     """Test predict.py with a sample input CSV"""
 
-    # ✅ Updated sample input to match new format and order
+    # ✅ Ensure sample input follows **exact order** of EXPECTED_FEATURES
     sample_data = [
-        [78, 15, 120, 0.85, 0.7, 0.9, 0.3, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
-        [70, 12, 110, 0.82, 0.65, 0.85, 0.4, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0]
+        [78, 15, 120, 0.85, 0.7, 0.9, 0.3, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  # Row 1
+        [70, 12, 110, 0.82, 0.65, 0.85, 0.4, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0]  # Row 2
     ]
 
     # ✅ Create DataFrame using the **exact feature order** from metadata
