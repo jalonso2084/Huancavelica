@@ -15,7 +15,7 @@ except ModuleNotFoundError as e:
 import pytest
 import pandas as pd
 
-# ✅ Load expected feature order from metadata.pkl
+# ✅ Load expected feature order directly from metadata.pkl
 metadata_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'metadata.pkl'))
 with open(metadata_path, 'rb') as f:
     metadata = joblib.load(f)
