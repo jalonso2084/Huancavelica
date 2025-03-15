@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load the model
-MODEL_PATH = 'model.pkl'
+MODEL_PATH = 'random_forest_model.pkl'
 
 def load_model():
     logging.info("Loading model...")
